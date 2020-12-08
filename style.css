@@ -3,6 +3,23 @@
     color: white;
     background-color: black;
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+    -ms-user-select: none;
+}
+
+::selection
+{
+    color: none;
+    background: none;
+}
+
+::-moz-selection
+{
+    color: none;
+    background: none;
 }
 
 #header
