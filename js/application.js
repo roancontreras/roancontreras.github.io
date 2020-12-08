@@ -4,6 +4,6 @@
 {
     $(document).ready(function()
     {
-        $("body").on("contextmenu", function(e){ e.preventDefault(); });
+        $('body').on('contextmenu', function(e){ e.preventDefault(); });
     });
-});
+})();
