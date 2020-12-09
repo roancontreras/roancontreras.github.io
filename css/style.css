@@ -24,21 +24,28 @@ nav a:hover
 
 header
 {
-    border-bottom: 1px solid white;
+    /* border-bottom: 1px solid white; */
     padding-bottom: 20px;
 }
 
 footer
 {
-    border-top: 1px solid white;
-    padding-top: 20px;
-    /* border-width: 10;
-    border: thin;
-    border-top: white; */
+    /* border-top: 1px solid white; */
+    padding: 20px 0;
 }
 
-body
+.container div 
 {
-    width: 450px;
-    margin: 0 auto;
+    width: 300px;
+    height: 500px;
+    background-color: rgb(151, 8, 151);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
 }
+
+.container .item1 { height: 200px; }
+.container .item4 { height: 800px; }
+.container .item6 { height: 600px; }
+.container .item11 { height: 400px; }
