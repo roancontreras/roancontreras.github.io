@@ -4,17 +4,33 @@
 {
     $(document).ready(function()
     {
-        let magicGrid = new MagicGrid({
+        $('body').on('contextmenu', function(e){ e.preventDefault(); });
+
+        for (var i = 0; i < 100; i++)
+        {
+            $(".container").append("<div class=\"item" + i.toString() +"\"><div class=\"icon\"></div></div>");
+            let _currentThumbnail = ".container .item" + i.toString() + " .icon";
+            $(_currentThumbnail).css(
+                {
+                    "height" : (200 + (Math.random() * 500)).toString() + "px",
+                    "background-image" : "url(\"img/testImg" + Math.floor(Math.random() * 4) + ".jpg\")",
+                    "cursor" : "pointer"
+                });
+
+            $(_currentThumbnail).mouseenter(function() { TweenMax.to($(this), 0.5, { "opacity" : "0.5", "transform" : "scale(1.25)", "ease" : "Back.easeOut" }); });
+            $(_currentThumbnail).mouseleave(function() { TweenMax.to($(this), 0.25, { "opacity" : "1", "transform" : "scale(1)", "ease" : "Power2.easeOut" }); });
+        }
+
+        let magicGrid = new MagicGrid(
+        {
             container: '.container',
             animate: false,
             gutter: 5,
             static: true,
             useMin: true
-          });
+        });
         
-          magicGrid.listen();
-
-        $('body').on('contextmenu', function(e){ e.preventDefault(); });
+        magicGrid.listen();
         // for (var i = 0; i < m_pages.length; i++)
         // {
         //     $("nav ul").append("<li data-pindex=\"" + i.toString() + "\">" + m_pages[i] + "</li>");
@@ -39,6 +55,8 @@
 
         //         m_pageIndex = _getIndex;
         //     });
+
+        // $("body").css( "cursor", "default" );    
         // }
     });
 })();
