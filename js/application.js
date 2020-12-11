@@ -2,25 +2,54 @@
 
 (function() 
 {
+    var m_menu = ["Resume", "Contact"];
+
     $(document).ready(function()
     {
+        //Defaults
         $('body').on('contextmenu', function(e){ e.preventDefault(); });
 
+        //Modal
+        $('#modal .close').click(function() {  console.log("close!"); windowFunction(false); });
+        $('#modal').click(function() { windowFunction(false); });
+
+        //Menu
+        m_menu.forEach(_m =>
+            {
+                let _index = m_menu.indexOf(_m);
+                $("nav ul").append("<li class=\"menu" + _index +  "\"><h4>" + _m + "</h4></li>");
+                $("nav ul .menu" + _index.toString()).click(function() 
+                {
+                    $("#modal img").attr("src", null);
+                    windowFunction(true); 
+                });
+            });
+
+        //Icons
         for (var i = 0; i < 100; i++)
         {
             $(".container").append("<div class=\"item" + i.toString() +"\"><div class=\"icon\"></div></div>");
             let _currentThumbnail = ".container .item" + i.toString() + " .icon";
+            let _setImg = "img/testImg" + Math.floor(Math.random() * 4) + ".jpg";
+
             $(_currentThumbnail).css(
                 {
                     "height" : (200 + (Math.random() * 500)).toString() + "px",
-                    "background-image" : "url(\"img/testImg" + Math.floor(Math.random() * 4) + ".jpg\")",
+                    "background-image" : "url(\"" + _setImg + "\")",
                     "cursor" : "pointer"
                 });
 
             $(_currentThumbnail).mouseenter(function() { TweenMax.to($(this), 0.5, { "opacity" : "0.5", "transform" : "scale(1.25)", "ease" : "Back.easeOut" }); });
             $(_currentThumbnail).mouseleave(function() { TweenMax.to($(this), 0.25, { "opacity" : "1", "transform" : "scale(1)", "ease" : "Power2.easeOut" }); });
+
+            $(_currentThumbnail).click(function() 
+            {
+                $("#modal img").attr("src", _setImg);
+                windowFunction(true); 
+            });
         }
 
+        //Init Magic Grid
         let magicGrid = new MagicGrid(
         {
             container: '.container',
@@ -59,4 +88,25 @@
         // $("body").css( "cursor", "default" );    
         // }
     });
+
+    function windowFunction(_toOpen)
+    {
+        if (_toOpen)
+        {
+            $("body").css({ "overflow": "hidden" });
+            $("#modal").css({ "display" : "block", "opacity" : "0" });
+            TweenMax.to($("#modal"), 0.5, { "opacity" : "1", "ease" : "Power2.easeOut" });
+        }
+        else
+        {
+            new TimelineMax()
+            .addLabel("modal")
+            .to($("#modal"), 0.5, { "opacity" : "0", "ease" : "Power2.easeOut" }, "modal")
+            .addCallback(function() 
+            {
+                $("#modal").css({ "display" : "none" });
+                $("body").css( { "overflow" : "auto" } );
+            }, "+=0", [], this)
+        }
+    }
 })();
