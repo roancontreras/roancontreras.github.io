@@ -20,7 +20,9 @@
                 $("nav ul").append("<li class=\"menu" + _index +  "\"><h4>" + _m + "</h4></li>");
                 $("nav ul .menu" + _index.toString()).click(function() 
                 {
-                    $("#modal img").attr("src", null);
+                    $("#modal #pic").css("background-image", "none");
+                    // $("#modal img").attr("src", null);
+                    $("#modal img").css({"display" : "none"});
                     windowFunction(true); 
                 });
             });
@@ -30,7 +32,8 @@
         {
             $(".container").append("<div class=\"item" + i.toString() +"\"><div class=\"icon\"></div></div>");
             let _currentThumbnail = ".container .item" + i.toString() + " .icon";
-            let _setImg = "img/testImg" + Math.floor(Math.random() * 4) + ".jpg";
+            let _setImg = Math.random() * 100 > 50 ? "img/testGif" + Math.floor(Math.random() * 4) + ".gif" :
+            "img/testImg" + Math.floor(Math.random() * 4) + ".jpg";
 
             $(_currentThumbnail).css(
                 {
@@ -44,6 +47,8 @@
 
             $(_currentThumbnail).click(function() 
             {
+                // $("#modal #pic").css("background-image", "url(\"" + _setImg + "\")");
+                $("#modal img").css({"display" : "block"});
                 $("#modal img").attr("src", _setImg);
                 windowFunction(true); 
             });
@@ -96,6 +101,7 @@
             $("body").css({ "overflow": "hidden" });
             $("#modal").css({ "display" : "block", "opacity" : "0" });
             TweenMax.to($("#modal"), 0.5, { "opacity" : "1", "ease" : "Power2.easeOut" });
+            document.getElementById("modal").scrollTop = 0;
         }
         else
         {
