@@ -9,22 +9,32 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Roan Contreras.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Roan Contreras" startnode="1" creator="Twine" creator-version="2.3.14" ifid="AE2CE8C7-699B-477A-B803-3D0A45F60907" zoom="1" format="Harlowe" format-version="3.2.2" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-story
+<tw-storydata name="Roan Contreras" startnode="1" creator="Twine" creator-version="2.3.14" ifid="AE2CE8C7-699B-477A-B803-3D0A45F60907" zoom="1" format="Harlowe" format-version="3.2.2" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">*
+{
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+tw-story
 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 20px;
-  background-color: black;
-  background-image: url('https://i.imgur.com/XulpVA4.jpeg');
+  background-color: blue;
+  /*background-image: url('https://i.imgur.com/XulpVA4.jpeg');
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: cover;*/
 }
 
 tw-passage
 {
-  background-color: black;
+  background-color: white;
+  color: black;
   padding: 20px;
   border-radius: 20px;
+    border: 3px dashed black;
+  /*box-shadow: 5px 5px 15px black;*/
 }
 
 tw-story a
@@ -41,18 +51,18 @@ tw-story a:hover
 
 tw-sidebar
 {
-	background-color: black;
+  background-color: white;
   border-radius: 20px;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/*"use strict";
+    border: 3px dashed black;
+  /*box-shadow: 2px 2px 10px black;*/
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">"use strict";
 
 (function()
 {
-	document.getElementsByTagName("body")[0].style.backgroundImage = ' url(https://i.imgur.com/XulpVA4.jpeg)';
-	console.log(document.getElementsByTagName("body")[0].style.backgroundImage);
+	var colorChoices = ["PowderBlue", "PaleTurquoise", "YellowGreen", "FireBrick"];
+	
+	document.getElementsByTagName('tw-story')[0].style.backgroundColor = colorChoices[Math.floor(Math.random() * colorChoices.length)];
 })();
-
-	document.getElementsByTagName("body")[0].style.backgroundImage = ' url(https://i.imgur.com/XulpVA4.jpeg)';
-	console.log(document.getElementsByTagName("body")[0].style.backgroundImage);*/
 
   /*var img = new Image();
     img.onload = function () 
@@ -60,7 +70,7 @@ tw-sidebar
         document.getElementsByTagName('body')[0].style.backgroundImage = img.src;
 			console.log(img.src);
     };
-    img.src = 'https://i.imgur.com/XulpVA4.jpeg';*/</script><tw-passagedata pid="1" name="home" tags="" position="294,274" size="100,100">This is a work in progress website, powered by Twine. :)
+    img.src = 'https://i.imgur.com/XulpVA4.jpeg';*/</script><tw-passagedata pid="1" name="home" tags="" position="252,308" size="100,100">This is a work in progress website, powered by Twine. :)
 
 &#39;&#39;Roan Contreras&#39;&#39; - Indie Game Developer, AB Multimedia Arts
 
