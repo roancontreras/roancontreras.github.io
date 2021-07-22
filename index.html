@@ -28,7 +28,11 @@ tw-story
 {
   font-family: 'Nunito', sans-serif;
   font-size: 18px;
-  background-color: blue;
+  background-color: black;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+  
   /*background-image: url('https://i.imgur.com/XulpVA4.jpeg');
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -47,16 +51,16 @@ tw-passage
   /*box-shadow: 5px 5px 15px black;*/
 }
 
-tw-story a
+tw-story a, tw-link
 {
   font-weight: bold;
   text-decoration: none;
-  color: cornflowerblue;
+  color: gray;
 }
 
-tw-story a:hover
+tw-story a:hover, tw-link:hover
 {
-  color: cyan;
+  color: darkgray;
 }
 
 tw-sidebar
@@ -69,9 +73,26 @@ tw-sidebar
 
 (function()
 {
-	var colorChoices = ["PowderBlue", "PaleTurquoise", "YellowGreen", "FireBrick"];
+	var colorChoices = ["#db5d69", "#c82f4e", "#55bbbd", "#2374ac", "#b838e7", "#6d2c86"];
+	var colorIndex = Math.floor(Math.random() * colorChoices.length);
 	
-	document.getElementsByTagName('tw-story')[0].style.backgroundColor = colorChoices[Math.floor(Math.random() * colorChoices.length)];
+	function refreshBkgColor()
+	{
+		document.getElementsByTagName('tw-story')[0].style.backgroundColor = colorChoices[colorIndex];
+	}
+	
+	function checkElements()
+	{
+		colorIndex++;
+		if (colorIndex > colorChoices.length - 1)
+			colorIndex = 0;
+		
+		refreshBkgColor();
+	}
+	
+	refreshBkgColor();
+	setInterval(checkElements, 3000);
+	
 })();
 
   /*var img = new Image();
