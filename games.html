@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Roan Contreras - Games</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="favicon.ico">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div id="container">
+            <header>
+                <h1 style="margin-bottom: 0; padding-bottom: 0;">Roan Contreras</h1>
+                <p style="text-align: center;"> All Games / <a href="index.html">Homepage</a></p>
+            </header>
+            <hr>
+            <ul id="allgameslist"></ul>
+            <hr>
+            <footer>
+                <p style="text-align: center;">Developed, written and designed by Roan Contreras<br>@ToadieTechnika</p>
+            </footer>
+        </div>
+    </body>
+</html>
+
+<script src="list.js"></script>
+<script>
+"use strict";
+data["g"].forEach(function(_g)
+{
+    var _game = document.createElement("li");
+    var _text = document.createElement("p");
+    _text.innerHTML = '<a target="_blank" href="' + _g.link + '">' + _g.title + "</a> &#x2023; " + _g.desc;
+
+    if (_g.star == 1)
+        _game.style.backgroundColor = "#2f5cb3";
+
+    _game.append(_text);
+    document.getElementById("allgameslist").append(_game);
+});
+</script>

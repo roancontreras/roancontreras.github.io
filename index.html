@@ -3,174 +3,14 @@
         <title>Roan Contreras - Indie Game Developer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="favicon.ico">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-            *
-            {
-                user-select: none;
-                box-sizing: border-box;
-            }
-            
-            h1
-            {
-                text-align: center;
-            }
-
-            body
-            {
-                /* font-family: Arial, Helvetica, sans-serif; */
-                padding-top: 15px;
-                font-family: 'Roboto', sans-serif;
-                background-color: #1d1d1d;
-                color: #e0e0e0;
-            }
-
-            #container
-            {
-                width: 100%;
-                max-width: 500px;
-                margin: 0 auto;
-            }
-
-            #games
-            {
-                /* font-size: 150%; */
-            }
-
-            #games ul
-            {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            #games li:hover
-            {
-                background-color: rgb(68, 68, 68);
-            }
-
-            #games ul li,
-            #games .button
-            {
-                border-radius: 10px;
-            }
-
-            #games ul li
-            {
-                background-color: black;
-                padding: 10;
-                margin: 10 0;
-                text-align: center;
-            }
-
-            /* #games ul li:hover
-            {
-                background-color: black;
-                padding: 10;
-                margin: 10 0;
-                text-align: center;
-            } */
-
-            /* #games li span
-            {
-                display: none;
-            } */
-
-            #games .button
-            {
-                z-index: 99;
-                background-color: white;
-                color: black;
-                cursor: pointer;
-                border: 2px solid white;
-                /* margin: 0; */
-            }
-
-            #games .button:hover
-            {
-                color: white;
-                background-color: black;
-                border: 2px solid white;
-            }
-
-            #games .play
-            {
-                margin: 10 auto;
-                width: 100%;
-                max-width: 200px;
-                margin-bottom: 0;
-            }
-
-            #games .display
-            {
-                cursor: pointer;
-            }
-
-            h2
-            {
-                margin: 0;
-            }
-
-            #games .star
-            {
-                width: 20px;
-                height: 20px;
-                background-color: white;
-                position: absolute;
-                margin-left: -20px;
-                margin-top: -20px;
-                border-radius: 10px;
-            }
-
-            footer
-            {
-                text-align: center;
-            }
-
-            p
-            {
-                text-align: justify;
-            }
-
-            a, a:visited, a:active
-            {
-                color: silver;
-                font-weight: bolder;
-            }
-
-            a:hover
-            {
-                color: azure;
-            }
-
-            hr
-            {
-                border: 0;
-                width: 100%;
-                height: 8px;
-                background: linear-gradient(to right, 
-                    #c21750   16%,
-                    #d5546a  16%, 
-                    #d5546a  33%, 
-                    #4477fa   33%, 
-                    #4477fa   50%, 
-                    #2f5cb3 50%, 
-                    #2f5cb3 66%, 
-                    #f932c9 66%,
-                    #f932c9 83%,
-                    #b628e3 83%,
-                    #b628e3 100%
-                );
-            }
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
         <div id="container">
             <header>
                 <h1 style="margin-bottom: 0; padding-bottom: 0;">Roan Contreras</h1>
-                <p style="text-align: center;"><a href="#privacy">Privacy Policy</a> / <a href="https://twitter.com/ToadieTechnika" target="_blank">Twitter</a> / roan.contreras [@] hotmail.com</p>
+                <p style="text-align: center;"><a href="#privacy">Privacy Policy</a> / <a href="https://twitter.com/ToadieTechnika" target="_blank">Twitter</a> / <a href="games.html">All Games</a> / roan.contreras [@] hotmail.com</p>
             </header>
 
             <hr>
@@ -179,13 +19,6 @@
             <hr>
             <section id="games">
             <ul id="gameslist">
-                <!-- <li>
-                    <span class="display">
-                    <h2>Love Nightmare</h2>
-                    <p style="display: inline;"> Collect all hearts, in ups and downs.</p>
-                    </span>
-                    <h2 class="button play" onclick="ClickMethod()">Play Game</h2>
-                </li> -->
             </ul>
             </section>
             <hr>
@@ -214,6 +47,7 @@
     </body>
 </html>
 
+<script src="list.js"></script>
 <script>
 "use strict";
 
@@ -224,22 +58,6 @@
 //     console.log("works!");
 // }
 
-var data = {
-"g":
-[
-{"star":0, "title":"Love Nightmare", "desc":"Collect all the hearts, in ups and downs.", "link":"https://www.newgrounds.com/portal/view/832657"},
-{"star":0, "title":"Around the World", "desc":"By encoding countries.", "link":"http://roancontreras.com/if/aroundtheworld"},
-{"star":1, "title":"Underblood", "desc":"Mouse controlling blood flow.", "link":"https://www.newgrounds.com/portal/view/790698"},
-{"star":0, "title":"News System", "desc":"Mass shooting poops.", "link":"https://www.newgrounds.com/portal/view/781776"},
-{"star":0, "title":"January One", "desc":"Lost and found story.", "link":"https://www.newgrounds.com/portal/view/779484"},
-{"star":0, "title":"Password System", "desc":"Pretending social media access.", "link":"https://www.newgrounds.com/portal/view/778623"},
-{"star":0, "title":"AZ101ESB", "desc":"101 keys to press.", "link":"https://www.newgrounds.com/portal/view/766732"},
-{"star":0, "title":"Frog Typing Tongue", "desc":"Frog's tongue made of texts.", "link":"https://www.newgrounds.com/portal/view/760187"},
-{"star":1, "title":"Prism Light", "desc":"Mouse maze with a light.", "link":"https://www.newgrounds.com/portal/view/756495"},
-{"star":1, "title":"Coordinator", "desc":"Pointing destinations. No bumps.", "link":"https://www.newgrounds.com/portal/view/753993"},
-{"star":0, "title":"Birth Video", "desc":"Repairing a weird, birth video.", "link":"https://www.newgrounds.com/portal/view/747333"}
-]
-};
 
 var m_games = {};
 
@@ -247,75 +65,50 @@ function CreateGames()
 {
     data["g"].forEach(function(_g)
     {
-        var _game = document.createElement("li");
-        var _displayBtn = document.createElement("span");
-        _displayBtn.className = "display";
+        if (_g.star == 0)
+            return;
 
-        if (_g.star == 1)
-        {
-            var _star = document.createElement("div");
-            _star.className = "star";
-            _game.append(_star);
-            _game.style.border = "3px solid white";
-        }
+        var _game = document.createElement("li");
+        var _text = document.createElement("span");
+        _text.className = "display";
 
         var _title = document.createElement("h2");
         _title.innerText = _g.title;
-        _title.style.display = "block";
+        _title.style.display = "inline";
         var _desc = document.createElement("p");
-        _desc.innerText = " // " + _g.desc;
-        _desc.style.display = "none";
+        _desc.innerHTML = " &#x2023; " + _g.desc;
+        _desc.style.display = "inline";
 
-        var _play = document.createElement("h2");
-        _play.className = "button play";
-        _play.innerText = "Play";
-        _play.style.display = "none";
+        _game.style.backgroundImage = 'url("' + "featured/" + _g.title + ".png" + '")';
 
-        _displayBtn.append(_title);
-        _displayBtn.append(_desc);
-        _game.append(_displayBtn);
-        _game.append(_play);
+        // var _play = document.createElement("h2");
+        // _play.className = "button play";
+        // _play.innerText = "Play";
+        // _play.style.display = "block";
+
+        _text.append(_title);
+        _text.append(_desc);
+        _game.append(_text);
+        // _game.append(_play);
 
         //clicks
-        _play.onclick = function() { window.open(_g.link); };
+        _game.onclick = function() { window.open(_g.link); };
 
         m_games[_g.title] = 
         {
             "title" : _title,
             "desc" : _desc,
-            "play" : _play
-        };
-
-        _displayBtn.onclick = function()
-        {
-            ToggleGame(_g.title);
+            // "play" : _play
         };
 
         //final
         document.getElementById("gameslist").append(_game);
     });
 
-    var _followingTxt = document.createElement("p");
-    _followingTxt.innerHTML = "<i>* More game titles to follow...</i>";
-    _followingTxt.style.textAlign = "center";
-    document.getElementById("gameslist").append(_followingTxt);
-}
-
-function ToggleGame(_code)
-{
-    var _game = m_games[_code];
-    if (_game.title.style.display == "block")
-    {
-        _game.title.style.display = "inline";
-        _game.desc.style.display = "inline";
-        _game.play.style.display = "block";
-    }
-    else
-    {
-        _game.title.style.display = "block";
-        _game.desc.style.display = "none";
-        _game.play.style.display = "none";
-    }
+    // var _followingTxt = document.createElement("p");
+    // _followingTxt.innerHTML = '<a href="games.html">All Games</a>';
+    // _followingTxt.style.textAlign = "center";
+    // document.getElementById("gameslist").append(_followingTxt);
 }
 
 CreateGames();

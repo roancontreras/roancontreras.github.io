@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*
+{
+    user-select: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+h1
+{
+    text-align: center;
+}
+
+body
+{
+    /* font-family: Arial, Helvetica, sans-serif; */
+    padding-top: 15px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #1d1d1d;
+    color: #e0e0e0;
+}
+
+#container
+{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#games
+{
+    /* font-size: 150%; */
+}
+
+#games ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* #games li:hover
+{
+    background-color: rgb(68, 68, 68);
+} */
+
+#games ul li,
+#games .button
+{
+    border-radius: 10px;
+}
+
+#games ul li
+{
+    overflow: hidden;
+    background-color: black;
+    padding: 60;
+    margin: 10 0;
+    text-align: center;
+
+    background-position: center;
+    background-size: initial;
+
+    border: 5px solid black;
+}
+
+#games ul li:hover
+{
+    border: 5px solid white;
+    cursor: pointer;
+}
+
+#games li span
+{
+    font-size: smaller;
+    text-align: left;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background: black;
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    /* border-radius: 25px; */
+    transform: translate(-60px, -60px);
+    pointer-events: none;
+}
+
+/* #games .display
+{
+    cursor: pointer;
+} */
+
+h2
+{
+    margin: 0;
+}
+
+footer
+{
+    text-align: center;
+}
+
+p
+{
+    text-align: justify;
+}
+
+a, a:visited, a:active
+{
+    color: silver;
+    font-weight: bolder;
+}
+
+a:hover
+{
+    color: azure;
+}
+
+hr
+{
+    border: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, 
+        #c21750   16%,
+        #d5546a  16%, 
+        #d5546a  33%, 
+        #4477fa   33%, 
+        #4477fa   50%, 
+        #2f5cb3 50%, 
+        #2f5cb3 66%, 
+        #f932c9 66%,
+        #f932c9 83%,
+        #b628e3 83%,
+        #b628e3 100%
+    );
+}
+
+#allgameslist
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
