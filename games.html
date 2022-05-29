@@ -25,13 +25,24 @@
 <script src="list.js"></script>
 <script>
 "use strict";
+
+var _currentYr = "";
 data["g"].forEach(function(_g)
 {
+    //is new year?
+    if (_currentYr != _g.year)
+    {
+        _currentYr = _g.year;
+        var _yrHeader = document.createElement("li");
+        _yrHeader.innerHTML = "<h2>" + _currentYr + "</h2>";
+        document.getElementById("allgameslist").append(_yrHeader);
+    }
+
     var _game = document.createElement("li");
     var _text = document.createElement("p");
     _text.innerHTML = '<a target="_blank" href="' + _g.link + '">' + _g.title + "</a> &#x2023; " + _g.desc;
 
-    if (_g.star == 1)
+    if (_g.front == 1)
         _game.style.backgroundColor = "#2f5cb3";
 
     _game.append(_text);

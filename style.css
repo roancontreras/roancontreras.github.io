@@ -61,7 +61,7 @@ body
     text-align: center;
 
     background-position: center;
-    background-size: initial;
+    background-size: cover;
 
     border: 5px solid black;
 }
@@ -74,7 +74,8 @@ body
 
 #games li span
 {
-    font-size: smaller;
+    opacity: 0.85;
+    font-size: small;
     text-align: left;
     /* background-color: rgba(0, 0, 0, 0.5); */
     background: black;
@@ -83,7 +84,7 @@ body
     height: auto;
     padding: 10px;
     /* border-radius: 25px; */
-    transform: translate(-60px, -60px);
+    transform: translate(-62px, -62px);
     pointer-events: none;
 }
 
@@ -143,4 +144,9 @@ hr
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+#allgameslist li p
+{
+    padding-left: 30px;
 }
