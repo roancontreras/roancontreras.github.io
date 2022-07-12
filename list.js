@@ -26,7 +26,7 @@ var data = {
     {"front":1, "year":"2018", "title":"Waiting System", "desc":"Windows updates expanded.", "link":"https://www.newgrounds.com/portal/view/708894"},
     {"front":0, "year":"2018", "title":"Throw Ice Cream", "desc":"Splatting targets, with ice creams.", "link":"https://www.newgrounds.com/portal/view/707759"},
     {"front":0, "year":"2018", "title":"Blind Sword", "desc":"Pause, listen and act.", "link":"https://www.newgrounds.com/portal/view/706054"},
-    {"front":0, "year":"2018", "title":"Signal Explorer", "desc":"Make transmission better.", "link":"https://www.newgrounds.com/portal/view/705916"},
+    {"front":1, "year":"2018", "title":"Signal Explorer", "desc":"Make transmission better.", "link":"https://www.coolmathgames.com/0-signal-explorer"},
     {"front":1, "year":"2017", "title":"Pitching", "desc":"Run and dodge with a tempo.", "link":"https://www.newgrounds.com/portal/view/699816"},
     {"front":1, "year":"2017", "title":"Chicken Enters the Door", "desc":"Make the chicken, enter the door.", "link":"https://www.newgrounds.com/portal/view/698205"},
     {"front":0, "year":"2017", "title":"Battery Penetrates", "desc":"Battery fantasy.", "link":"https://www.newgrounds.com/portal/view/697166"},
