@@ -3,6 +3,7 @@
 var data = {
     "g":
     [
+    {"front":0, "year":"2022", "title":"Perfect Tower", "desc":"Inspired by Tower of Hanoi.", "link":"https://www.newgrounds.com/portal/view/850616"},
     {"front":0, "year":"2022", "title":"Purgatory Area", "desc":"Mouse-only platformer, with twists.", "link":"https://www.newgrounds.com/portal/view/847845"},
     {"front":0, "year":"2022", "title":"QR Tale", "desc":"Storytelling with a QR scanner.", "link":"https://toadietechnika.itch.io/qr-tale"},
     {"front":0, "year":"2022", "title":"Love Nightmare", "desc":"Collect all the hearts, in ups and downs.", "link":"https://www.newgrounds.com/portal/view/832657"},
