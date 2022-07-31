@@ -10,32 +10,14 @@
         <div id="container">
             <header>
                 <h1 style="margin-bottom: 0; padding-bottom: 0;">Roan Contreras</h1>
-                <p style="text-align: center;"><a href="#privacy">Privacy Policy</a> / <a href="https://twitter.com/ToadieTechnika" target="_blank">Twitter</a> / <a href="games.html">All Games</a> / <a href="prototypes.html">Prototypes</a> / roan.contreras [@] hotmail.com</p>
+                <p style="text-align: center;"><a href="privacy.html">Privacy Policy</a> / <a href="https://twitter.com/ToadieTechnika" target="_blank">Twitter</a> / <a href="games.html">All Games</a> / <a href="prototypes.html">Prototypes</a> / roan.contreras [@] hotmail.com</p>
             </header>
 
             <hr>
-            <p>Hello, it's <b>ToadieTechnika</b>, I make video games for the internet. Here are some examples:
+            <p>Hello, it's <b>ToadieTechnika</b>, I make video games for the internet. Here are some of them:
             <section id="games">
             <ul id="gameslist">
             </ul>
-            </section>
-            <hr>
-            <section id="privacy">
-                <h1>Privacy Policy</h1>
-                <p>Primarily, all of my content will not have any form of advertisements (ads). I will not track anything that you do in my games, just simply have fun. Keep in mind that I don't sell any personal or non-personal information.</p>
-                <p>My games are made with different software, they're also placed in external websites. Here's a list of privacy policy to know more:</p>
-                <ul>
-                    <li><a target="_blank" href="https://unity3d.com/legal/privacy-policy">Unity</a></li>
-                    <li><a target="_blank" href="https://www.construct.net/en/privacy-policy">Construct</a></li>
-                    <li><a target="_blank" href="https://www.newgrounds.com/wiki/help-information/privacy-policy">Newgrounds</a></li>
-                    <li><a target="_blank" href="https://itch.io/docs/legal/privacy-policy">Itch.io</a></li>
-                </ul>
-                <p>More importantly, your system shouldn't also be infected by any virus. You may have come to the wrong place if these happens to you from any of my content.</p>
-                <p>What does my games access per device?</p>
-                <ol>
-                    <li><b>I will have access</b> to your data that is ONLY RELATED TO the content.</li>
-                    <li><b>I will NOT have access to</b> your privacy and important system files.</li>
-                </ol>
             </section>
             <hr>
             <footer>
@@ -73,9 +55,9 @@ function CreateGames()
         var _title = document.createElement("h2");
         _title.innerText = _g.title;
         _title.style.display = "inline";
-        var _desc = document.createElement("p");
-        _desc.innerHTML = " &#x2023; " + _g.desc;
-        _desc.style.display = "inline";
+        // var _desc = document.createElement("p");
+        // _desc.innerHTML = " &#x2023; " + _g.desc;
+        // _desc.style.display = "inline";
 
         _game.style.backgroundImage = 'url("../' + "featured/" + _g.title.toLowerCase() + ".png" + '")';
 
@@ -85,7 +67,7 @@ function CreateGames()
         // _play.style.display = "block";
 
         _text.append(_title);
-        _text.append(_desc);
+        // _text.append(_desc);
         _game.append(_text);
         // _game.append(_play);
 
@@ -95,7 +77,7 @@ function CreateGames()
         m_games[_g.title] = 
         {
             "title" : _title,
-            "desc" : _desc,
+            // "desc" : _desc,
             // "play" : _play
         };
 

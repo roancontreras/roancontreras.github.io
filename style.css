@@ -78,7 +78,8 @@ body
     font-size: small;
     text-align: left;
     /* background-color: rgba(0, 0, 0, 0.5); */
-    background: black;
+    /* background: black; */
+    background-image: linear-gradient(to right, black , rgba(0, 0, 0, 0));
     display: block;
     width: 100%;
     height: auto;
