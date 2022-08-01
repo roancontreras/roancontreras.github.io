@@ -109,17 +109,6 @@ p
     text-align: justify;
 }
 
-a, a:visited, a:active
-{
-    color: silver;
-    font-weight: bolder;
-}
-
-a:hover
-{
-    color: azure;
-}
-
 hr
 {
     border: 0;
@@ -150,4 +139,50 @@ hr
 #allgameslist li p
 {
     padding-left: 30px;
+}
+
+/* Hyperlinks */
+a
+{
+    font-weight: bolder;
+    text-decoration: none;
+    color: silver;
+}
+
+a:hover
+{
+    color: azure;
+}
+
+header a, 
+header a:visited,
+header a:active
+{
+    color: #1d1d1d;
+    background-color: silver;
+    padding: 1px 10px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+header a:hover
+{
+    color: azure;
+    background-color: transparent;
+    border: 1px solid white;
+}
+
+footer a, 
+footer a:visited, 
+footer a:active
+{
+    color: silver;
+    background-color: transparent;
+    font-size: smaller;
+}
+
+footer a:hover
+{
+    color: azure;
+    background-color: none;
 }
