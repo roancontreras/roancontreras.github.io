@@ -15,11 +15,12 @@ h1
 
 body
 {
-    /* font-family: Arial, Helvetica, sans-serif; */
     padding-top: 15px;
     font-family: 'Roboto', sans-serif;
     background-color: #1d1d1d;
     color: #e0e0e0;
+    margin: 0;
+    padding: 0;
 }
 
 #container
@@ -28,71 +29,6 @@ body
     max-width: 500px;
     margin: 0 auto;
 }
-
-#games
-{
-    /* font-size: 150%; */
-}
-
-#games ul
-{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-/* #games li:hover
-{
-    background-color: rgb(68, 68, 68);
-} */
-
-#games ul li,
-#games .button
-{
-    border-radius: 10px;
-}
-
-#games ul li
-{
-    overflow: hidden;
-    background-color: black;
-    padding: 60;
-    margin: 10 0;
-    text-align: center;
-
-    background-position: center;
-    background-size: cover;
-
-    border: 5px solid black;
-}
-
-#games ul li:hover
-{
-    border: 5px solid white;
-    cursor: pointer;
-}
-
-#games li span
-{
-    opacity: 0.85;
-    font-size: small;
-    text-align: left;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    /* background: black; */
-    background-image: linear-gradient(to right, black , rgba(0, 0, 0, 0));
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    /* border-radius: 25px; */
-    transform: translate(-62px, -62px);
-    pointer-events: none;
-}
-
-/* #games .display
-{
-    cursor: pointer;
-} */
 
 h2
 {
@@ -186,3 +122,25 @@ footer a:hover
     color: azure;
     background-color: none;
 }
+
+/* Homepage Featured Games */
+#games ul
+{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#games img
+{
+    width: 100%;
+    height: 150px;
+    background-position: center;
+    background-size: cover;
+    display: block;
+}
+
+#games img:hover
+{
+    border: 4px solid white;
+} 

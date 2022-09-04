@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Roan Contreras</title>
@@ -10,11 +11,11 @@
         <div id="container">
             <header></header>
             <hr>
-            <p>Hi, it's ToadieTechnika and I make video games. Samples below:
+
             <section id="games">
-            <ul id="gameslist">
-            </ul>
+                <ul id="gameslist"></ul>
             </section>
+
             <hr>
             <footer></footer>
         </div>
@@ -26,9 +27,7 @@
 <script>
 "use strict";
 
-var m_games = {};
-
-function CreateGames()
+(function()
 {
     data["g"].forEach(function(_g)
     {
@@ -36,47 +35,17 @@ function CreateGames()
             return;
 
         var _game = document.createElement("li");
-        var _text = document.createElement("span");
-        _text.className = "display";
+        var _clickBox = document.createElement("a");
+        var _imageBox = document.createElement("img");
 
-        var _title = document.createElement("h2");
-        _title.innerText = _g.title;
-        _title.style.display = "inline";
-        // var _desc = document.createElement("p");
-        // _desc.innerHTML = " &#x2023; " + _g.desc;
-        // _desc.style.display = "inline";
+        _imageBox.style.backgroundImage = 'url("../' + "featured/" + _g.title.toLowerCase() + ".png" + '")';
+        _clickBox.setAttribute("href", _g.link);
+        _clickBox.setAttribute("target", "_none");
 
-        _game.style.backgroundImage = 'url("../' + "featured/" + _g.title.toLowerCase() + ".png" + '")';
-
-        // var _play = document.createElement("h2");
-        // _play.className = "button play";
-        // _play.innerText = "Play";
-        // _play.style.display = "block";
-
-        _text.append(_title);
-        // _text.append(_desc);
-        _game.append(_text);
-        // _game.append(_play);
-
-        //clicks
-        _game.onclick = function() { window.open(_g.link); };
-
-        m_games[_g.title] = 
-        {
-            "title" : _title,
-            // "desc" : _desc,
-            // "play" : _play
-        };
-
-        //final
+        //finish
+        _clickBox.append(_imageBox);
+        _game.append(_clickBox);
         document.getElementById("gameslist").append(_game);
     });
-
-    // var _followingTxt = document.createElement("p");
-    // _followingTxt.innerHTML = '<a href="games.html">All Games</a>';
-    // _followingTxt.style.textAlign = "center";
-    // document.getElementById("gameslist").append(_followingTxt);
-}
-
-CreateGames();
+})();
 </script>
