@@ -3,49 +3,59 @@
     <head>
         <title>Roan Contreras</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="favicon.ico">
-        <link rel="stylesheet" href="style.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+            *
+            {
+                box-sizing: border-box;
+            }
+
+            h1, h2, h3, h4, h5, h6
+            {
+                margin: 0;
+                padding: 0;
+            }
+
+            body
+            {
+                font-family: Roboto, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            #container
+            {
+                max-width: 500px;
+                margin: 25px;
+            }
+
+            #letter
+            {
+                text-align: justify;
+            }
+        </style>
     </head>
 
     <body>
         <div id="container">
-            <header></header>
-            <hr>
+        <h1>Roan Contreras</h1>
+        <h4>roan.contreras[@]hotmail.com / @ToadieTechnika</h4>
+        <br>
+        <h3>Hello!</h3>
+        <span id="letter">
+        <p>I am a game developer focusing on the Web. All of my games <del>that are supposedly here</del> are freeware, meaning <b>you can play them for FREE</b>. I also teach courses, related to Multimedia Arts and Game Development, in different schools.</p>
+        <p>As you can see, you have come to a work in progress space. And of course, I am still making video games (since 2008). But I figure that I need to spend way more time preparing the website. Things have been juggling ever since I discovered that teaching is also part of my life. I teach not only to make them learn, but also to influence them on how I handle my skills and abilities.</p>
+        <p>In fact, there's nothing wrong to move away in "this area" for a while. When I return, there will be lots of new games to be played. It'll be something way different than before. Not to mention that I need to share <del>or dump</del> some artworks here too, for more interest.</p>
+        <p>I hope you'll understand, just be patient for some time. Thanks for reading.</p>
+        <hr>
 
-            <section id="games">
-                <ul id="gameslist"></ul>
-            </section>
-
-            <hr>
-            <footer></footer>
-        </div>
+        <p>To play my games:</p>
+        <ul>
+            <li><a href="https://toadietechnika.newgrounds.com/games/" target="_blank">Click here!</a></li>
+            <li><a href="https://toadietechnika.itch.io" target="_blank">... or here!</a></li>
+        </ul>
+        </span>
+    </div>
     </body>
 </html>
-
-<script src="js/global.js"></script>
-<script src="js/list.js"></script>
-<script>
-"use strict";
-
-(function()
-{
-    data["g"].forEach(function(_g)
-    {
-        if (_g.front == 0)
-            return;
-
-        var _game = document.createElement("li");
-        var _clickBox = document.createElement("a");
-        var _imageBox = document.createElement("img");
-
-        _imageBox.style.backgroundImage = 'url("../' + "featured/" + _g.title.toLowerCase() + ".png" + '")';
-        _clickBox.setAttribute("href", _g.link);
-        _clickBox.setAttribute("target", "_none");
-
-        //finish
-        _clickBox.append(_imageBox);
-        _game.append(_clickBox);
-        document.getElementById("gameslist").append(_game);
-    });
-})();
-</script>
