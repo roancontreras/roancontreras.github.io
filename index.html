@@ -8,6 +8,7 @@
 
             *
             {
+                user-select: none;
                 box-sizing: border-box;
             }
 
@@ -29,6 +30,57 @@
                 max-width: 500px;
                 margin: 25px;
             }
+
+            ul
+            {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            ul li a, .comingsoon
+            {
+                text-align: center;
+                padding: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                border-radius: 20px;
+                display: block;
+                width: 100%;
+                background-color: black;
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+                border: 2px black solid;
+                transition: 0.5s;
+            }
+
+            .comingsoon
+            {
+                background-color: white;
+                color: black;
+                opacity: 0.5;
+            }
+
+            ul li a:hover
+            {
+                background-color: white;
+                color: black;
+                transition: 0.5s;
+            }
+
+            @media only screen and (max-width: 500px)
+            {
+                h1, h2, h3, h4, h5, h6
+                {
+                    text-align: center;
+                }
+
+                p
+                {
+                    text-align: justify;
+                }
+            }
         </style>
     </head>
 
@@ -47,22 +99,27 @@
     <body>
         <div id="container">
         <h1>Roan Contreras</h1>
-        <h4>roan.contreras[@]hotmail.com / @ToadieTechnika</h4>
-        <br>
-        <h3>Hello!</h3>
+        <h4>roan.contreras[@]hotmail.com</h4>
+        <hr>
+        <h2>"Hello, Hi, Welcome, How are you?"</h2>
         <span id="letter">
+        <p>Thanks for being here; You may have searched me from the internet or heard from other people. I am also "ToadieTechnika" from Newgrounds and Itch.io. <b>I don't have mainstream social media such as Facebook, Instagram, Twitter and the list goes on.</b></p>
         <p>I am a game developer and an educator. All of my games <del>that are supposedly here</del> are freeware. I also teach courses in the fields of <i>Multimedia Arts and Game Development.</i></p>
         <p>As you can see, you have come to a "textual space". Over the months, things have been overwhelming ever since I entered a teaching career. Teaching has been so influential, believe it, or not. <i>Life-changing.</i></p>
         <p>The point is, there's nothing wrong with moving away from "this area" in a while. I'll spend lots of time and effort making games.</p>
         <p><i>When I return, there will be lots of new games to be played. It'll be something way different than before.</i></p>
         <hr>
 
-        <p>See you soon, feel free to contact via E-mail, and to play my games:</p>
+        <p>You may contact me E-mail for business matters, and if you're looking for my portfolio:</p>
         <ul>
-            <li><a href="https://toadietechnika.newgrounds.com/games/" target="_blank">Click here!</a></li>
-            <li><a href="https://toadietechnika.itch.io" target="_blank">... or here!</a></li>
+            <li><a href="https://toadietechnika.newgrounds.com/games/" target="_blank">Click here! (Newgrounds)</a></li>
+            <li><a href="https://toadietechnika.itch.io" target="_blank">... or here! (Itch.io)</a></li>
+            <li class="comingsoon">Interactive Fiction Project</li>
+            <li class="comingsoon">Blog</li>
         </ul>
         </span>
+        <hr>
+        <h5>Website simply developed and designed by Roan Contreras / ToadieTechnika.</h5>
     </div>
     </body>
 </html>
