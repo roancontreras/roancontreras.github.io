@@ -21,7 +21,7 @@ body
 
 #container
 {
-    max-width: 500px;
+    max-width: 1000px;
     /* margin: 25px; */
     margin: 25px auto;
 }
@@ -31,6 +31,28 @@ ul
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+hr
+{
+    border: 0;
+    width: 100%;
+    max-width: 650px;
+    height: 3px;
+    background-color: #404040;
+    /* background: linear-gradient(to right, 
+        black   16%,
+        #262626  16%, 
+        #262626  33%, 
+        #404040   33%, 
+        #404040   50%, 
+        #404040 50%, 
+        #404040 66%, 
+        #262626 66%,
+        #262626 83%,
+        black 83%,
+        black 100%
+    ); */
 }
 
 ul li a, .comingsoon
@@ -105,4 +127,11 @@ blockquote p
     {
         text-align: justify;
     }
+}
+
+#slim
+{
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
 }

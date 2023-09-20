@@ -22,8 +22,9 @@ img:focus
   top: 0;
   width: 100%;
   height: 100%; 
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9); 
+  background-color: black;
+  /* background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);  */
 }
   
 #imgSolo 
@@ -40,20 +41,54 @@ img:focus
 #close 
 {
   background-color: black;
-  padding: 5px 20px;
+  color: white;
+  padding: 1px 15px;
   position: fixed;
   top: 15px;
   right: 15px;
-  color: #f1f1f1;
-  font-size: 45px;
+  font-size: 50px;
   font-weight: bold;
   border-radius: 10px;
+  border: 3px white solid;
+  transition: 0.5s;
 }
   
 #close:hover,
 #close:focus 
 {
-  color: #bbb;
+  background-color: white;
+  color: black;
   text-decoration: none;
   cursor: pointer;
+  transition: 0.5s;
+  /* border: 3px white solid; */
+}
+
+#gallery
+{
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+#column
+{
+  padding: 2px;
+  float: left;
+  width: 50%;
+}
+
+@media only screen and (max-width: 500px)
+{
+  #column
+  {
+    float: initial;
+    width: 100%;
+    padding: 0px;
+  }
+
+  #gallery
+  {
+    display: block;
+  }
 }
