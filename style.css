@@ -22,7 +22,6 @@ body
 #container
 {
     max-width: 1000px;
-    /* margin: 25px; */
     margin: 25px auto;
 }
 
@@ -111,7 +110,14 @@ blockquote p
     display: inline;
 }
 
-@media only screen and (max-width: 500px)
+#slim
+{
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+@media only screen and (max-width: 650px)
 {
     #container
     {
@@ -127,11 +133,4 @@ blockquote p
     {
         text-align: justify;
     }
-}
-
-#slim
-{
-    display: block;
-    margin: 0 auto;
-    max-width: 500px;
 }
