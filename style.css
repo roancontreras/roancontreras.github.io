@@ -25,12 +25,12 @@ hr
 { 
     color: black;
     background: yellow;
-  }
-  
+}
+
 ::selection 
 {
-color: black;
-background: yellow;
+    color: black;
+    background: yellow;
 }
 
 #container
@@ -38,16 +38,6 @@ background: yellow;
     padding: 10px;
     max-width: 800px;
     margin: 0 auto;
-}
-
-h1
-{
-    font-size: 400%;
-}
-
-h2
-{
-    font-size: 250%;
 }
 
 a,
@@ -69,4 +59,74 @@ a:hover
 #greeting
 {
     text-align: center;
+}
+
+#footer
+{
+    text-align: center;
+}
+
+#footer img
+{
+    width: 180px;
+    height: 180px;
+}
+
+#footer p
+{
+    padding: 0;
+    margin: 0;
+}
+
+#header_portrait,
+#header_landscape
+{
+    width: 100%;
+    margin-top: 20px;
+}
+
+#header_portrait img,
+#header_landscape img
+{
+    width: 100%;
+}
+
+#header_landscape
+{
+    margin-top: 40px;
+    display: block;
+}
+
+#header_portrait
+{
+    display: none;
+}
+
+hr
+{
+    display: none;
+}
+
+@media only screen and (max-width: 650px) 
+{
+    hr
+    {
+        display: block;
+    }
+
+    #header_landscape
+    {
+        display: none;
+    }
+    
+    #header_portrait
+    {
+        display: block;
+    }
+    
+    #footer img
+    {
+        width: 128px;
+        height: 128px;
+    }
 }
