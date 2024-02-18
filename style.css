@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 *
 {
     box-sizing: border-box;
@@ -7,7 +9,8 @@
 
 body
 {
-    font-family: "Poppins", sans-serif;
+    /* letter-spacing: -0.5px; */
+    font-family: "Roboto Mono", monospace;
     background-color: #0078d7;
     color: white;
     margin: 0;
@@ -16,21 +19,21 @@ body
 
 hr
 {
-    height: 2px;
+    height: 1px;
     border: 0;
-    background-color: greenyellow;
+    background-color: white;
 }
 
 ::-moz-selection /* Code for Firefox */
 { 
     color: black;
-    background: yellow;
+    background: silver;
 }
 
 ::selection 
 {
     color: black;
-    background: yellow;
+    background: silver;
 }
 
 #container
@@ -40,19 +43,27 @@ hr
     margin: 0 auto;
 }
 
+p
+{
+    line-height: 30px;
+}
+
 a,
 a:active, 
 a:visited
 {
-    color: greenyellow;
+    color: #0078d7;
     font-weight: bold;
-    /* text-decoration: none; */
+    background-color: white;
+    text-decoration: none;
+    border: 2px #ffffff solid;
+    padding: 0px 5px;
 }
 
 a:hover
 {
-    color: black;
-    background-color: white;
+    color: #ffffff;
+    background-color: #0078d7;
     text-decoration: none;
 }
 
@@ -102,17 +113,17 @@ a:hover
     display: none;
 }
 
-hr
+/* hr
 {
     display: none;
-}
+} */
 
 @media only screen and (max-width: 650px) 
 {
-    hr
+    /* hr
     {
         display: block;
-    }
+    } */
 
     #header_landscape
     {
