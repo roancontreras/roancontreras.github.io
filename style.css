@@ -11,7 +11,7 @@ body
 {
     /* letter-spacing: -0.5px; */
     font-family: "Roboto Mono", monospace;
-    background-color: #0078d7;
+    background-color: #0000aa;
     color: white;
     margin: 0;
     padding: 0;
@@ -52,7 +52,7 @@ a,
 a:active, 
 a:visited
 {
-    color: #0078d7;
+    color: #0000aa;
     font-weight: bold;
     background-color: white;
     text-decoration: none;
@@ -63,7 +63,7 @@ a:visited
 a:hover
 {
     color: #ffffff;
-    background-color: #0078d7;
+    background-color: #0000aa;
     text-decoration: none;
 }
 
