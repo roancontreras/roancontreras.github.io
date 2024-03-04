@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+    <title>Myst - like point and click</title>
+</head>
+<style>
+    body
+    {
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        color: white;
+        overflow: hidden;
+    }
+
+    area
+    {
+        cursor: pointer;
+    }
+
+    img
+    {
+        user-select: none;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+    <div id="game">
+    </div>
+</body>
+
+<script>
+"use strict";
+
+setInterval(resize, 1);
+resize();
+loadScene("House_Very_Far"); //starting frame
+
+function loadScene(_scene)
+{
+    fetch('scenes/' + _scene + '.json', { 
+        method: 'GET'})
+        .then(function(response) 
+        {
+            return response.json(); 
+        })
+        .then(function(json)
+        {
+            //clear
+            var _g = document.getElementById("game");
+            _g.innerHTML = "";
+            var _html = "";
+
+            var _img = document.createElement("img");
+            _img.src = "img/" + _scene + ".jpg";
+            _img.useMap = "#imgmap";
+            _g.append(_img);
+
+            var _imgMap = document.createElement("map");
+            _imgMap.name = "imgmap";
+
+            for (var i = 0; i < json["hotspots"].length; i++)
+            {
+                var _dataSplit = json["hotspots"][i].split('|');
+
+                var _area = document.createElement("area");
+                _area.shape = _dataSplit[0];
+                _area.coords = _dataSplit[1];
+                designateArea(_area, _dataSplit[2]);
+
+                _imgMap.appendChild(_area);
+            }
+
+            _g.append(_imgMap);
+            resize();
+        });
+}
+
+function designateArea(_place, _obj)
+{
+    _place.onmousedown = function() { loadScene(_obj); };
+}
+
+function resize()
+{
+    if (document.getElementsByTagName("img")[0] == null)
+        return;
+
+    var _wRef = 640;
+    var _hRef = 480;
+    var _aspectRef = _wRef / _hRef;
+
+    var _imgStyle =  document.getElementsByTagName("img")[0].style;
+    var _w = window.innerWidth;
+    var _h = window.innerHeight;
+    var _aspect = _w / _h;
+
+    var _marginLeft =  (_w - _wRef) / 2;
+    var _marginTop = (_h - _hRef) / 2;
+
+    var _wScale = _w / _wRef;
+    var _hScale = _h / _hRef;
+
+    _imgStyle.marginTop = _marginTop + "px";
+    _imgStyle.marginLeft = _marginLeft + "px";
+    _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
+    window.scroll(0, 0);
+}
+</script>
