@@ -23,23 +23,37 @@
         margin: 0;
         padding: 0;
     }
+
+    #loading
+    {
+        user-select: none;
+        pointer-events: none;
+        font-size: 50px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        padding: 10px;
+        margin: 20px;
+        background-color: black;
+    }
 </style>
 <body>
-    <div id="game">
-    </div>
+    <div id="game"></div>
+    <div id="loading">Loading...</div>
 </body>
 
 <script>
 "use strict";
 
+// document.getElementById("loading").style.display = "none";
 setInterval(resize, 1);
-resize();
+// resize();
 loadScene("House_Very_Far"); //starting frame
 
 function loadScene(_scene)
 {
-    fetch('scenes/' + _scene + '.json', { 
-        method: 'GET'})
+    fetch('scenes/' + _scene + '.json', { method: 'GET'})
         .then(function(response) 
         {
             return response.json(); 
@@ -51,34 +65,46 @@ function loadScene(_scene)
             _g.innerHTML = "";
             var _html = "";
 
-            var _img = document.createElement("img");
-            _img.src = "img/" + _scene + ".jpg";
-            _img.useMap = "#imgmap";
-            _g.append(_img);
-
-            var _imgMap = document.createElement("map");
-            _imgMap.name = "imgmap";
-
-            for (var i = 0; i < json["hotspots"].length; i++)
+            var _loadimg = new Image();
+            _loadimg.onload = function() 
             {
-                var _dataSplit = json["hotspots"][i].split('|');
+                document.getElementById("loading").style.display = "none";
+                var _img = document.createElement("img");
+                _img.src = _loadimg.src;
+                _img.useMap = "#imgmap";
+                _g.append(_img);
 
-                var _area = document.createElement("area");
-                _area.shape = _dataSplit[0];
-                _area.coords = _dataSplit[1];
-                designateArea(_area, _dataSplit[2]);
+                var _imgMap = document.createElement("map");
+                _imgMap.name = "imgmap";
 
-                _imgMap.appendChild(_area);
+                for (var i = 0; i < json["hotspots"].length; i++)
+                {
+                    var _dataSplit = json["hotspots"][i].split('|');
+
+                    var _area = document.createElement("area");
+                    _area.shape = _dataSplit[0];
+                    _area.coords = _dataSplit[1];
+                    designateArea(_area, _dataSplit[2]);
+
+                    _imgMap.appendChild(_area);
+                }
+
+                _g.append(_imgMap);
+                resize();
             }
 
-            _g.append(_imgMap);
-            resize();
+            _loadimg.src = "img/" + _scene + ".jpg";
         });
 }
 
 function designateArea(_place, _obj)
 {
-    _place.onmousedown = function() { loadScene(_obj); };
+    _place.onmousedown = function() 
+    {
+        document.getElementById("loading").style.display = "block";
+        document.getElementsByTagName("map")[0].remove();
+        loadScene(_obj); 
+    };
 }
 
 function resize()
