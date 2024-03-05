@@ -22,13 +22,17 @@
         user-select: none;
         margin: 0;
         padding: 0;
+        top: 0;
+        left: 0;
+
+        position: fixed;
     }
 
     #loading
     {
         user-select: none;
         pointer-events: none;
-        font-size: 50px;
+        font-size: 20px;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -36,6 +40,7 @@
         padding: 10px;
         margin: 20px;
         background-color: black;
+        z-index: 99;
     }
 </style>
 <body>
@@ -62,15 +67,12 @@ function loadScene(_scene)
         {
             //clear
             var _g = document.getElementById("game");
-            _g.innerHTML = "";
-            var _html = "";
+            // _g.innerHTML = "";
 
-            var _loadimg = new Image();
-            _loadimg.onload = function() 
+            var _img = new Image();
+            _img.onload = function() 
             {
                 document.getElementById("loading").style.display = "none";
-                var _img = document.createElement("img");
-                _img.src = _loadimg.src;
                 _img.useMap = "#imgmap";
                 _g.append(_img);
 
@@ -91,9 +93,14 @@ function loadScene(_scene)
 
                 _g.append(_imgMap);
                 resize();
+
+                //dispose last image
+                if (document.getElementsByTagName("img").length >= 2)
+                    document.getElementsByTagName("img")[0].remove();
             }
 
-            _loadimg.src = "img/" + _scene + ".jpg";
+            _img.src = "img/" + _scene + ".jpg";
+            _g.append(_img);
         });
 }
 
@@ -109,27 +116,31 @@ function designateArea(_place, _obj)
 
 function resize()
 {
-    if (document.getElementsByTagName("img")[0] == null)
+    if (document.getElementsByTagName("img").length < 1)
         return;
 
     var _wRef = 640;
     var _hRef = 480;
     var _aspectRef = _wRef / _hRef;
 
-    var _imgStyle =  document.getElementsByTagName("img")[0].style;
     var _w = window.innerWidth;
     var _h = window.innerHeight;
     var _aspect = _w / _h;
-
+    
     var _marginLeft =  (_w - _wRef) / 2;
     var _marginTop = (_h - _hRef) / 2;
-
+    
     var _wScale = _w / _wRef;
     var _hScale = _h / _hRef;
+    
+    for (var i = 0; i < document.getElementsByTagName("img").length; i++)
+    {
+        var _imgStyle =  document.getElementsByTagName("img")[i].style;
+        _imgStyle.marginTop = _marginTop + "px";
+        _imgStyle.marginLeft = _marginLeft + "px";
+        _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
+    }
 
-    _imgStyle.marginTop = _marginTop + "px";
-    _imgStyle.marginLeft = _marginLeft + "px";
-    _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
     window.scroll(0, 0);
 }
 </script>
