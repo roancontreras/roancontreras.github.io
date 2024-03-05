@@ -19,6 +19,13 @@
 
     img
     {
+        user-drag: none; 
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+
         user-select: none;
         margin: 0;
         padding: 0;
@@ -51,10 +58,18 @@
 <script>
 "use strict";
 
-// document.getElementById("loading").style.display = "none";
 setInterval(resize, 1);
-// resize();
 loadScene("House_Very_Far"); //starting frame
+
+document.body.oncontextmenu = function()
+{
+    return false;
+};
+
+document.oncontextmenu = function()
+{
+    return false;
+};
 
 function loadScene(_scene)
 {
@@ -70,6 +85,7 @@ function loadScene(_scene)
             // _g.innerHTML = "";
 
             var _img = new Image();
+            _img.draggable = false;
             _img.onload = function() 
             {
                 document.getElementById("loading").style.display = "none";
@@ -100,6 +116,11 @@ function loadScene(_scene)
             }
 
             _img.src = "img/" + _scene + ".jpg";
+            _img.oncontextmenu = function()
+            {
+                return false;
+            };
+
             _g.append(_img);
             resize();
         });
