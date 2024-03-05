@@ -3,6 +3,11 @@
     <title>Myst - like point and click</title>
 </head>
 <style>
+    *
+    {
+        box-sizing: border-box;
+    }
+
     body
     {
         margin: 0;
@@ -49,14 +54,33 @@
         background-color: black;
         z-index: 99;
     }
+
+    #fullscreen 
+    {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: #000;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmAQMAAACS83vtAAAABGdBTUEAALGOfPtRkwAAAAZQTFRF////AAAAVcLTfgAAAChJREFUCNdj+A8Efxgg5AHGfww8OMmD////I4VENpkYklTz8bsWyWQAquWKHztTPDkAAAAASUVORK5CYII=);
+    background-size: cover;
+    z-index: 999;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 0.5s;
+    }
 </style>
 <body>
+    <div id="fullscreen"></div>
     <div id="game"></div>
     <div id="loading">Loading...</div>
 </body>
 
 <script>
 "use strict";
+
+var isFullScreen = -1;
 
 setInterval(resize, 1);
 loadScene("House_Very_Far"); //starting frame
@@ -163,6 +187,49 @@ function resize()
         _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
     }
 
+    switch (isFullScreen)
+    {
+        case -1:
+        isFullScreen = 0;
+        break;
+    }
+
     window.scroll(0, 0);
 }
+
+document.getElementById("fullscreen").addEventListener('click', function (e) 
+    {
+        if (isFullScreen == -1)
+        return;
+
+        try {
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen)
+            docElm.requestFullscreen();
+        else if (docElm.mozRequestFullScreen)
+            docElm.mozRequestFullScreen();
+        else if (docElm.webkitRequestFullScreen)
+            docElm.webkitRequestFullScreen();
+        else if (docElm.msRequestFullscreen)
+            docElm.msRequestFullscreen();
+
+        screen.orientation.lock("landscape");
+        } catch (_e) {
+
+        }
+    });
+
+    window.addEventListener("fullscreenchange", function () 
+    {
+        isFullScreen = isFullScreen == 0 ? 1 : 0;
+        document.getElementById("fullscreen").style.display = isFullScreen == 1 ? "none" : "block";
+    });
+</script>
+
+<!-- IIFE Reference (from Unity WebGL FIX)-->
+<script>
+(function() 
+{
+   
+})();
 </script>
