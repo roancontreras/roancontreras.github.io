@@ -10,6 +10,7 @@
 
     body
     {
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
         background-color: black;
@@ -55,25 +56,51 @@
         z-index: 99;
     }
 
+    #textFrame
+    {
+        pointer-events: none;
+        opacity: 0.75;
+        position: fixed;
+        z-index: 99;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        text-align: center;
+        font-size: 26px;
+        padding: 20px;
+    }
+
+    #textFrame p
+    {
+        max-width: 800px;
+        /* display: block; */
+        margin: 0 auto;
+    }
+
     #fullscreen 
     {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 50px;
-    height: 50px;
-    background-color: #000;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmAQMAAACS83vtAAAABGdBTUEAALGOfPtRkwAAAAZQTFRF////AAAAVcLTfgAAAChJREFUCNdj+A8Efxgg5AHGfww8OMmD////I4VENpkYklTz8bsWyWQAquWKHztTPDkAAAAASUVORK5CYII=);
-    background-size: cover;
-    z-index: 999;
-    opacity: 0.5;
-    cursor: pointer;
-    transition: 0.5s;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        background-color: #000;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmAQMAAACS83vtAAAABGdBTUEAALGOfPtRkwAAAAZQTFRF////AAAAVcLTfgAAAChJREFUCNdj+A8Efxgg5AHGfww8OMmD////I4VENpkYklTz8bsWyWQAquWKHztTPDkAAAAASUVORK5CYII=);
+        background-size: cover;
+        z-index: 999;
+        opacity: 0.5;
+        cursor: pointer;
+        transition: 0.5s;
     }
 </style>
 <body>
     <div id="fullscreen"></div>
     <div id="game"></div>
+
+    <div id="textFrame">
+        <p id="text"></p>
+    </div>
+
     <div id="loading">Loading...</div>
 </body>
 
@@ -81,8 +108,10 @@
 "use strict";
 
 var isFullScreen = -1;
+var textTime = 0;
+document.getElementById("textFrame").style.display = "none";
 
-setInterval(resize, 1);
+setInterval(update, 1);
 loadScene("House_Very_Far"); //starting frame
 
 document.body.oncontextmenu = function()
@@ -126,13 +155,13 @@ function loadScene(_scene)
                     var _area = document.createElement("area");
                     _area.shape = _dataSplit[0];
                     _area.coords = _dataSplit[1];
-                    designateArea(_area, _dataSplit[2]);
+                    setHotspot(_area, _dataSplit[2]);
 
                     _imgMap.appendChild(_area);
                 }
 
                 _g.append(_imgMap);
-                resize();
+                update();
 
                 //dispose last image
                 if (document.getElementsByTagName("img").length >= 2)
@@ -146,22 +175,51 @@ function loadScene(_scene)
             };
 
             _g.append(_img);
-            resize();
+            update();
         });
 }
 
-function designateArea(_place, _obj)
+function setHotspot(_place, _action)
 {
+    var _actionSplit = _action.split('=');
+
     _place.onmousedown = function() 
     {
-        document.getElementById("loading").style.display = "block";
-        document.getElementsByTagName("map")[0].remove();
-        loadScene(_obj); 
+        switch (_actionSplit[0])
+        {
+            case "go":
+            document.getElementById("loading").style.display = "block";
+            document.getElementsByTagName("map")[0].remove();
+            hideText();
+            loadScene(_actionSplit[1]);
+            break;
+            case "text":
+            document.getElementById("textFrame").style.display = "block";
+            document.getElementById("text").innerText = _actionSplit[1];
+            textTime = 800;
+            break;
+        }
     };
 }
 
-function resize()
+function hideText()
 {
+    document.getElementById("textFrame").style.display = "none"; 
+    textTime = 0;   
+}
+
+function update()
+{
+    //if text is appeared
+    if (textTime > 0)
+    {
+        textTime--;
+
+        if (textTime < 1)
+            hideText();
+    }
+
+    //Resize window
     if (document.getElementsByTagName("img").length < 1)
         return;
 
@@ -198,32 +256,32 @@ function resize()
 }
 
 document.getElementById("fullscreen").addEventListener('click', function (e) 
-    {
-        if (isFullScreen == -1)
-        return;
+{
+    if (isFullScreen == -1)
+    return;
 
-        try {
-        var docElm = document.documentElement;
-        if (docElm.requestFullscreen)
-            docElm.requestFullscreen();
-        else if (docElm.mozRequestFullScreen)
-            docElm.mozRequestFullScreen();
-        else if (docElm.webkitRequestFullScreen)
-            docElm.webkitRequestFullScreen();
-        else if (docElm.msRequestFullscreen)
-            docElm.msRequestFullscreen();
+    try {
+    var docElm = document.documentElement;
+    if (docElm.requestFullscreen)
+        docElm.requestFullscreen();
+    else if (docElm.mozRequestFullScreen)
+        docElm.mozRequestFullScreen();
+    else if (docElm.webkitRequestFullScreen)
+        docElm.webkitRequestFullScreen();
+    else if (docElm.msRequestFullscreen)
+        docElm.msRequestFullscreen();
 
-        screen.orientation.lock("landscape");
-        } catch (_e) {
+    screen.orientation.lock("landscape");
+    } catch (_e) {
 
-        }
-    });
+    }
+});
 
-    window.addEventListener("fullscreenchange", function () 
-    {
-        isFullScreen = isFullScreen == 0 ? 1 : 0;
-        document.getElementById("fullscreen").style.display = isFullScreen == 1 ? "none" : "block";
-    });
+window.addEventListener("fullscreenchange", function () 
+{
+    isFullScreen = isFullScreen == 0 ? 1 : 0;
+    document.getElementById("fullscreen").style.display = isFullScreen == 1 ? "none" : "block";
+});
 </script>
 
 <!-- IIFE Reference (from Unity WebGL FIX)-->

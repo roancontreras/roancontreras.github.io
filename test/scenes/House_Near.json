@@ -1,7 +1,7 @@
 {
     "hotspots": 
     [
-        "rect|202, 92, 379, 436|Lamp_OFF",
-        "rect|490, 0, 640, 480|House_Far"
+        "rect|202, 92, 379, 436|go=Lamp_OFF",
+        "rect|490, 0, 640, 480|go=House_Far"
     ]
 }

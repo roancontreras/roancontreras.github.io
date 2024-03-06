@@ -1,3 +1,6 @@
 {
-    "hotspots": ["rect|219, 147, 448, 237|House_Far"]
+    "hotspots": 
+    [
+        "rect|219, 147, 448, 237|go=House_Far"
+    ]
 }

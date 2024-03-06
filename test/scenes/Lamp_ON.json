@@ -1,7 +1,10 @@
 {
     "hotspots": 
     [
-        "rect|490, 0, 640, 480|House_Near",
-        "rect|80, 394, 157, 455|Lamp_OFF"
+        "rect|80, 394, 157, 455|go=Lamp_OFF",
+        "rect|510, 0, 640, 480|go=House_Near",
+        "rect|333, 234, 420, 374|text=Nice balls...",
+        "rect|76, 52, 308, 360|text=This is a lamp, so bright.",
+        "rect|441, 272, 500, 319|text=What happened to this ball? It didn't had a good day."
     ]
 }

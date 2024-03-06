@@ -1,6 +1,6 @@
 {
     "hotspots": [
-        "rect|160, 118, 436, 308|House_Near",
-        "rect|0, 400, 640, 480|House_Very_Far"
+        "rect|160, 118, 436, 308|go=House_Near",
+        "rect|0, 400, 640, 480|go=House_Very_Far"
     ]
 }
