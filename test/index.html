@@ -14,9 +14,8 @@
         font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: black;
-        color: white;
         overflow: hidden;
+        background-color: black;
     }
 
     area
@@ -58,8 +57,10 @@
 
         padding: 10px;
         margin: 20px;
-        background-color: black;
         z-index: 99;
+
+        color: white;
+        background-color: black;
     }
 
     #textFrame
@@ -70,16 +71,17 @@
         z-index: 99;
         bottom: 0;
         width: 100%;
-        background-color: black;
         text-align: center;
         font-size: 26px;
         padding: 20px;
+
+        color: white;
+        background-color: black;
     }
 
     #textFrame p
     {
         max-width: 800px;
-        /* display: block; */
         margin: 0 auto;
     }
 
@@ -115,10 +117,15 @@
 
 var isFullScreen = -1;
 var textTime = 0;
+var imagesMax = 0;
+var imagesLoaded = 0;
+var currentScene = "";
+var sceneData = {};
+
 document.getElementById("textFrame").style.display = "none";
 
 setInterval(update, 1);
-loadScene("House_Very_Far"); //starting frame
+setup(); //starting frame
 
 document.body.oncontextmenu = function()
 {
@@ -130,59 +137,136 @@ document.oncontextmenu = function()
     return false;
 };
 
-function loadScene(_scene)
+function createScenes(_settings)
 {
-    fetch('scenes/' + _scene + '.json', { method: 'GET'})
+    var _g = document.getElementById("game");
+    currentScene = _settings["scenes"][0];
+    imagesMax = _settings["scenes"].length;
+
+    for (var i = 0; i < imagesMax; i++)
+        createSingleScene(_settings["scenes"][i]);
+
+    var _imgMap = document.createElement("map");
+    _imgMap.name = "imgmap";
+    _imgMap.id = "imgmap";
+    _g.append(_imgMap);
+}
+
+function createSingleScene(_name)
+{
+    var _g = document.getElementById("game");
+    fetch("scenes/" + _name + ".json", { method: 'GET'})
         .then(function(response) 
         {
             return response.json(); 
         })
         .then(function(json)
         {
-            //clear
-            var _g = document.getElementById("game");
-            // _g.innerHTML = "";
-
             var _img = new Image();
+            _img.style.display = "none";
+            _img.id = _name;
             _img.draggable = false;
-            _img.onload = function() 
+            _img.useMap = "#imgmap";
+            _img.onload = function()
             {
-                document.getElementById("loading").style.display = "none";
-                _img.useMap = "#imgmap";
-                _g.append(_img);
+                imagesLoaded++;
+                var _progress = (imagesLoaded / imagesMax) * 100;
+                console.log(_progress);
+                document.getElementById("text").innerText = _progress;
 
-                var _imgMap = document.createElement("map");
-                _imgMap.name = "imgmap";
-
-                for (var i = 0; i < json["hotspots"].length; i++)
-                {
-                    var _dataSplit = json["hotspots"][i].split('|');
-
-                    var _area = document.createElement("area");
-                    _area.shape = _dataSplit[0];
-                    _area.coords = _dataSplit[1];
-                    setHotspot(_area, _dataSplit[2]);
-
-                    _imgMap.appendChild(_area);
-                }
-
-                _g.append(_imgMap);
-                update();
-
-                //dispose last image
-                if (document.getElementsByTagName("img").length >= 2)
-                    document.getElementsByTagName("img")[0].remove();
+                if (_progress >= 100)
+                    scenesCompleted();
             }
 
-            _img.src = "img/" + _scene + ".jpg";
-            _img.oncontextmenu = function()
-            {
-                return false;
-            };
-
+            _img.src = json["image"];
             _g.append(_img);
-            update();
+
+            sceneData[_name] = {};
+            sceneData[_name]["hotspots"] = json["hotspots"];
         });
+}
+
+function scenesCompleted()
+{
+    document.getElementById("loading").style.display = "none";
+    goToScene(currentScene);
+}
+
+function goToScene(_scene)
+{
+    document.getElementById(_scene).style.display = "block";
+    var _hotspots = sceneData[_scene]["hotspots"];
+    var _getImgMap = document.getElementsByTagName("map")[0];
+    _getImgMap.innerHTML = "";
+
+    for (var i = 0; i < _hotspots.length; i++)
+    {
+        var _dataSplit = _hotspots[i].split('|');
+        console.log(_dataSplit);
+
+        var _area = document.createElement("area");
+        _area.shape = _dataSplit[0];
+        _area.coords = _dataSplit[1];
+        setHotspot(_area, _dataSplit[2]);
+
+        _getImgMap.appendChild(_area);
+    }
+}
+
+function setup()
+{
+    fetch('settings.json', { method: 'GET'})
+    .then(function(response)  { return response.json(); })
+    .then(function(json) { createScenes(json); });
+
+    // fetch('scenes/' + _scene + '.json', { method: 'GET'})
+    // .then(function(response) 
+    // {
+    //     return response.json(); 
+    // })
+    // .then(function(json)
+    // {
+    //     var _g = document.getElementById("game");
+    //     var _img = new Image();
+    //     _img.draggable = false;
+    //     _img.onload = function() 
+    //     {
+    //         document.getElementById("loading").style.display = "none";
+    //         _img.useMap = "#imgmap";
+    //         _g.append(_img);
+
+    //         var _imgMap = document.createElement("map");
+    //         _imgMap.name = "imgmap";
+
+    //         for (var i = 0; i < json["hotspots"].length; i++)
+    //         {
+    //             var _dataSplit = json["hotspots"][i].split('|');
+
+    //             var _area = document.createElement("area");
+    //             _area.shape = _dataSplit[0];
+    //             _area.coords = _dataSplit[1];
+    //             setHotspot(_area, _dataSplit[2]);
+
+    //             _imgMap.appendChild(_area);
+    //         }
+
+    //         _g.append(_imgMap);
+    //         update();
+
+    //         //dispose last image
+    //         if (document.getElementsByTagName("img").length >= 2)
+    //             document.getElementsByTagName("img")[0].remove();
+    //     }
+
+    //     _img.src = json["image"];
+    //     _img.oncontextmenu = function()
+    //     {
+    //         return false;
+    //     };
+
+    //     _g.append(_img);
+    //     update();
+    // });
 }
 
 function setHotspot(_place, _action)
@@ -194,10 +278,10 @@ function setHotspot(_place, _action)
         switch (_actionSplit[0])
         {
             case "go":
-            document.getElementById("loading").style.display = "block";
-            document.getElementsByTagName("map")[0].remove();
             hideText();
-            loadScene(_actionSplit[1]);
+            document.getElementById(currentScene).style.display = "none";
+            currentScene = _actionSplit[1];
+            goToScene(currentScene);
             break;
             case "text":
             document.getElementById("textFrame").style.display = "block";
