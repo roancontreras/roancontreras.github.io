@@ -143,8 +143,11 @@ function createScenes(_settings)
     currentScene = _settings["scenes"][0];
     imagesMax = _settings["scenes"].length;
 
-    for (var i = 0; i < imagesMax; i++)
-        createSingleScene(_settings["scenes"][i]);
+    // for (var i = 0; i < imagesMax; i++)
+    //     createSingleScene(_settings["scenes"][i]);
+
+    //do recursive call
+    createSingleScene(_settings["scenes"][imagesLoaded], _settings);
 
     var _imgMap = document.createElement("map");
     _imgMap.name = "imgmap";
@@ -152,9 +155,8 @@ function createScenes(_settings)
     _g.append(_imgMap);
 }
 
-function createSingleScene(_name)
+function createSingleScene(_name, _scenesList)
 {
-
     var _g = document.getElementById("game");
     fetch("scenes/" + _name + ".json", { method: 'GET'})
         .then(function(response) 
@@ -175,6 +177,8 @@ function createSingleScene(_name)
 
                 if (imagesLoaded >= imagesMax)
                     scenesCompleted();
+                else
+                    createSingleScene(_scenesList["scenes"][imagesLoaded], _scenesList);
             }
 
             _img.src = json["image"];
