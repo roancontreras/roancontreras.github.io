@@ -154,6 +154,7 @@ function createScenes(_settings)
 
 function createSingleScene(_name)
 {
+
     var _g = document.getElementById("game");
     fetch("scenes/" + _name + ".json", { method: 'GET'})
         .then(function(response) 
@@ -170,11 +171,9 @@ function createSingleScene(_name)
             _img.onload = function()
             {
                 imagesLoaded++;
-                var _progress = (imagesLoaded / imagesMax) * 100;
-                console.log(_progress);
-                document.getElementById("text").innerText = _progress;
+                document.getElementById("loading").innerText = imagesLoaded + " / " + imagesMax;
 
-                if (_progress >= 100)
+                if (imagesLoaded >= imagesMax)
                     scenesCompleted();
             }
 
@@ -202,7 +201,6 @@ function goToScene(_scene)
     for (var i = 0; i < _hotspots.length; i++)
     {
         var _dataSplit = _hotspots[i].split('|');
-        console.log(_dataSplit);
 
         var _area = document.createElement("area");
         _area.shape = _dataSplit[0];
