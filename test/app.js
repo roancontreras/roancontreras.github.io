@@ -88,6 +88,9 @@ function scenesCompleted()
 
 function goToScene(_scene)
 {
+    if (_scene == null)
+        _scene = currentScene;
+
     document.getElementById(_scene).style.display = "block";
     var _hotspots = sceneData[_scene]["hotspots"];
     var _getImgMap = document.getElementsByTagName("map")[0];
@@ -122,10 +125,33 @@ function setHotspot(_place, _action)
         switch (_actionSplit[0])
         {
             case "go":
+            // hideText();
+            // document.getElementById(currentScene).style.display = "none";
+            // currentScene = _actionSplit[1];
+            // goToScene(currentScene);
+
+            
+            //TRANSITIONS TEST USING TWEENMAX
             hideText();
-            document.getElementById(currentScene).style.display = "none";
+            var _current = document.getElementById(currentScene);
             currentScene = _actionSplit[1];
-            goToScene(currentScene);
+            var _next = document.getElementById(_actionSplit[1]);
+            _next.style.display = "block";
+            _current.style.zIndex = 0;
+            _next.style.zIndex = 1;
+            var _getImgMap = document.getElementsByTagName("map")[0];
+            _getImgMap.innerHTML = "";
+
+            new TimelineMax()
+                // .to(_current, 0.5, {opacity: 0, y: 0, x: 0})
+                .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+                .addCallback(function() 
+                {
+                    _current.style.opacity = 1;
+                    _current.style.display = "none";
+                    goToScene(); 
+                }, "+=0");
+
             break;
             case "text":
             document.getElementById("textFrame").style.display = "block";
@@ -194,7 +220,7 @@ function update()
     window.scroll(0, 0);
 }
 
-document.getElementById("fullscreen").addEventListener('click', function (e) 
+document.getElementById("fullscreen").onmousedown = function() 
 {
     if (isFullScreen == -1)
     return;
@@ -214,7 +240,7 @@ document.getElementById("fullscreen").addEventListener('click', function (e)
     } catch (_e) {
 
     }
-});
+};
 
 window.addEventListener("fullscreenchange", function () 
 {
