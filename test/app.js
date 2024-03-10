@@ -137,20 +137,37 @@ function setHotspot(_place, _action)
             currentScene = _actionSplit[1];
             var _next = document.getElementById(_actionSplit[1]);
             _next.style.display = "block";
-            _current.style.zIndex = 0;
-            _next.style.zIndex = 1;
             var _getImgMap = document.getElementsByTagName("map")[0];
             _getImgMap.innerHTML = "";
 
+            _current.style.zIndex = 0;
+            _next.style.zIndex = 1;
+
             new TimelineMax()
-                // .to(_current, 0.5, {opacity: 0, y: 0, x: 0})
-                .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
-                .addCallback(function() 
-                {
-                    _current.style.opacity = 1;
-                    _current.style.display = "none";
-                    goToScene(); 
-                }, "+=0");
+            // .to(_current, 0.5, {opacity: 0, y: 0, x: 0}) //fade in out
+            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+
+            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
+
+            // //Slide left/right
+            // .addLabel("t")
+            // .to(_current, 0.75, { opacity: 1, x: 640, y: 0, ease: Power2.easeInOut}, "t+=0")
+            // .from(_next, 0.75, { opacity: 1,  x: -640, y: 0, ease: Power2.easeInOut}, "t+=0")
+            // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+
+            //Slide up/down
+            .addLabel("t")
+            .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
+            .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
+            .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+
+            .addCallback(function() 
+            {
+                _next.style.opacity = 1;
+                _current.style.opacity = 1;
+                _current.style.display = "none";
+                goToScene(); 
+            }, "+=0");
 
             break;
             case "text":
@@ -184,9 +201,9 @@ function update()
             hideText();
     }
 
-    //Resize window
-    if (document.getElementsByTagName("img").length < 1)
-        return;
+    // //Resize window
+    // if (document.getElementsByTagName("img").length < 1)
+    //     return;
 
     var _wRef = 640;
     var _hRef = 480;
@@ -202,13 +219,20 @@ function update()
     var _wScale = _w / _wRef;
     var _hScale = _h / _hRef;
     
-    for (var i = 0; i < document.getElementsByTagName("img").length; i++)
-    {
-        var _imgStyle =  document.getElementsByTagName("img")[i].style;
-        _imgStyle.marginTop = _marginTop + "px";
-        _imgStyle.marginLeft = _marginLeft + "px";
-        _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
-    }
+    // for (var i = 0; i < document.getElementsByTagName("img").length; i++)
+    // {
+    //     var _imgStyle =  document.getElementsByTagName("img")[i].style;
+    //     _imgStyle.marginTop = _marginTop + "px";
+    //     _imgStyle.marginLeft = _marginLeft + "px";
+    //     _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
+    // }
+
+    var _game = document.getElementById("game").style;
+    _game.width = _wRef + "px";
+    _game.height = _hRef + "px";
+    _game.marginTop = _marginTop + "px";
+    _game.marginLeft = _marginLeft + "px";
+    _game.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
 
     switch (isFullScreen)
     {
