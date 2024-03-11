@@ -46,6 +46,17 @@ img
     position: absolute;
 }
 
+#loadingBar
+{
+    pointer-events: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 15px;
+    background-color: white;
+}
+
 #loading
 {
     user-drag: none; 

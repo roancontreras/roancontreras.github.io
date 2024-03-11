@@ -64,7 +64,8 @@ function createSingleScene(_name, _scenesList)
             _img.onload = function()
             {
                 imagesLoaded++;
-                document.getElementById("loading").innerText = imagesLoaded + " / " + imagesMax;
+                document.getElementById("loadingBar").style.width = ((imagesLoaded/imagesMax) * 100) + "%";
+                // document.getElementById("loading").innerText = imagesLoaded + " / " + imagesMax;
 
                 if (imagesLoaded >= imagesMax)
                     scenesCompleted();
@@ -83,6 +84,7 @@ function createSingleScene(_name, _scenesList)
 function scenesCompleted()
 {
     document.getElementById("loading").style.display = "none";
+    document.getElementById("loadingBar").style.display = "none";
     goToScene(currentScene);
 }
 
@@ -147,7 +149,7 @@ function setHotspot(_place, _action)
             // .to(_current, 0.5, {opacity: 0, y: 0, x: 0}) //fade in out
             // .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
 
-            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
+            .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
 
             // //Slide left/right
             // .addLabel("t")
@@ -155,11 +157,11 @@ function setHotspot(_place, _action)
             // .from(_next, 0.75, { opacity: 1,  x: -640, y: 0, ease: Power2.easeInOut}, "t+=0")
             // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
 
-            //Slide up/down
-            .addLabel("t")
-            .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
-            .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
-            .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+            // //Slide up/down
+            // .addLabel("t")
+            // .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
+            // .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
+            // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
 
             .addCallback(function() 
             {
