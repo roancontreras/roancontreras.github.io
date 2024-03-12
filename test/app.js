@@ -10,7 +10,9 @@ var textTime = 0;
 var imagesMax = 0;
 var imagesLoaded = 0;
 var currentScene = "";
-var sceneData = {};
+// var sceneData = {};
+var scenes = [];
+var sceneIndex = 0;
 
 var lastUpdate = Date.now();
 var dt = 0;
@@ -18,6 +20,12 @@ var dt = 0;
 document.getElementById("textFrame").style.display = "none";
 setInterval(update, 1);
 setup();
+
+var sceneStruct = function(_name, _hotspots)
+{
+    this.name = _name;
+    this.hotspots = _hotspots;
+};
 
 document.body.oncontextmenu = function()
 {
@@ -28,6 +36,11 @@ document.oncontextmenu = function()
 {
     return false;
 };
+
+function getSceneIndex(_name)
+{
+    return scenes.findIndex((_s) => _s.name == _name);
+}
 
 function createScenes(_settings)
 {
@@ -65,7 +78,6 @@ function createSingleScene(_name, _scenesList)
             {
                 imagesLoaded++;
                 document.getElementById("loadingBar").style.width = ((imagesLoaded/imagesMax) * 100) + "%";
-                // document.getElementById("loading").innerText = imagesLoaded + " / " + imagesMax;
 
                 if (imagesLoaded >= imagesMax)
                     scenesCompleted();
@@ -76,25 +88,36 @@ function createSingleScene(_name, _scenesList)
             _img.src = json["image"];
             _g.append(_img);
 
-            sceneData[_name] = {};
-            sceneData[_name]["hotspots"] = json["hotspots"];
+            // sceneData[_name] = {};
+            // sceneData[_name]["hotspots"] = json["hotspots"];
+
+            scenes.push(new sceneStruct(_name, json["hotspots"]));
         });
 }
 
 function scenesCompleted()
 {
+    // console.log(sceneData);
+    // console.log(scenes);
+
     document.getElementById("loading").style.display = "none";
     document.getElementById("loadingBar").style.display = "none";
-    goToScene(currentScene);
+    goToScene();
 }
 
-function goToScene(_scene)
+function goToScene()
 {
-    if (_scene == null)
-        _scene = currentScene;
+    // console.log(sceneIndex);
+    // if (_scene == null)
+    // {
+    //     _scene = currentScene;
+    //     sceneIndex = getSceneIndex(_scene);
+    // }
 
-    document.getElementById(_scene).style.display = "block";
-    var _hotspots = sceneData[_scene]["hotspots"];
+    var _takeScene = scenes[sceneIndex];
+
+    document.getElementById(_takeScene.name).style.display = "block";
+    var _hotspots = _takeScene.hotspots; //sceneData[_scene]["hotspots"];
     var _getImgMap = document.getElementsByTagName("map")[0];
     _getImgMap.innerHTML = "";
 
@@ -127,13 +150,23 @@ function setHotspot(_place, _action)
         switch (_actionSplit[0])
         {
             case "go":
-            // hideText();
-            // document.getElementById(currentScene).style.display = "none";
-            // currentScene = _actionSplit[1];
-            // goToScene(currentScene);
+            //check name
+            switch (_actionSplit[1])
+            {
+                case "prev":
+                    sceneIndex--;
+                    _actionSplit[1] = scenes[sceneIndex].name;
+                    break;
+                case "next":
+                    sceneIndex++;
+                    _actionSplit[1] = scenes[sceneIndex].name;
+                    break;
+                default:
+                    sceneIndex = getSceneIndex(_actionSplit[1]);
+                    //none
+                    break;
+            }
 
-            
-            //TRANSITIONS TEST USING TWEENMAX
             hideText();
             var _current = document.getElementById(currentScene);
             currentScene = _actionSplit[1];
@@ -145,31 +178,53 @@ function setHotspot(_place, _action)
             _current.style.zIndex = 0;
             _next.style.zIndex = 1;
 
-            new TimelineMax()
-            // .to(_current, 0.5, {opacity: 0, y: 0, x: 0}) //fade in out
-            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+            // console.log(scenes.findIndex((_s) => _s.name == _actionSplit[1]));
 
-            .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
-
-            // //Slide left/right
-            // .addLabel("t")
-            // .to(_current, 0.75, { opacity: 1, x: 640, y: 0, ease: Power2.easeInOut}, "t+=0")
-            // .from(_next, 0.75, { opacity: 1,  x: -640, y: 0, ease: Power2.easeInOut}, "t+=0")
-            // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
-
-            // //Slide up/down
-            // .addLabel("t")
-            // .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
-            // .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
-            // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
-
-            .addCallback(function() 
+            //set transition
+            var _moveSceneAction = function()
             {
                 _next.style.opacity = 1;
                 _current.style.opacity = 1;
                 _current.style.display = "none";
                 goToScene(); 
-            }, "+=0");
+            };
+            switch (_actionSplit[2])
+            {
+                case "fadeinout":
+                new TimelineMax()
+                    .to(_current, 0.5, {opacity: 0, y: 0, x: 0})
+                    .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
+                case "fade":
+                    new TimelineMax()
+                    .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
+                default: //none or otherwise
+                    _moveSceneAction();
+                    break;
+            }
+
+            // new TimelineMax()
+            // // .to(_current, 0.5, {opacity: 0, y: 0, x: 0}) //fade in out
+            // // .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
+
+            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
+
+            // // //Slide left/right
+            // // .addLabel("t")
+            // // .to(_current, 0.75, { opacity: 1, x: 640, y: 0, ease: Power2.easeInOut}, "t+=0")
+            // // .from(_next, 0.75, { opacity: 1,  x: -640, y: 0, ease: Power2.easeInOut}, "t+=0")
+            // // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+
+            // // //Slide up/down
+            // // .addLabel("t")
+            // // .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
+            // // .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
+            // // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+
+            // .addCallback(_moveSceneAction, "+=0");
 
             break;
             case "text":
@@ -221,14 +276,6 @@ function update()
     var _wScale = _w / _wRef;
     var _hScale = _h / _hRef;
     
-    // for (var i = 0; i < document.getElementsByTagName("img").length; i++)
-    // {
-    //     var _imgStyle =  document.getElementsByTagName("img")[i].style;
-    //     _imgStyle.marginTop = _marginTop + "px";
-    //     _imgStyle.marginLeft = _marginLeft + "px";
-    //     _imgStyle.scale = (_aspect > _aspectRef) ? _hScale : _wScale;
-    // }
-
     var _game = document.getElementById("game").style;
     _game.width = _wRef + "px";
     _game.height = _hRef + "px";
