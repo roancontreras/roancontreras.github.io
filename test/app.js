@@ -201,6 +201,18 @@ function setHotspot(_place, _action)
                     .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
                     .addCallback(_moveSceneAction, "+=0");
                     break;
+                case "slide_left":
+                case "slide_right":
+                    var _nextXpos = 640 * (_actionSplit[2] == "slide_right" ? -1 : 1);
+                    var _currentXpos = -640 * (_actionSplit[2] == "slide_right" ? -1 : 1);
+
+                    new TimelineMax()
+                    .addLabel("t")
+                    .to(_current, 0.75, { opacity: 1, x: _nextXpos, y: 0, ease: Power2.easeInOut}, "t+=0")
+                    .from(_next, 0.75, { opacity: 1,  x: _currentXpos, y: 0, ease: Power2.easeInOut}, "t+=0")
+                    .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
                 default: //none or otherwise
                     _moveSceneAction();
                     break;

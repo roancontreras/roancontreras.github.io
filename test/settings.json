@@ -5,6 +5,10 @@
         "House_Far",
         "House_Near",
         "Lamp_OFF",
-        "Lamp_ON"
+        "Lamp_ON",
+        "inlamp_scene_mid",
+        "inlamp_scene_right",
+        "inlamp_scene_left",
+        "inlamp_scene_down"
     ]
 }
