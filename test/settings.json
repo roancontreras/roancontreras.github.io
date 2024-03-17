@@ -1,4 +1,9 @@
 {
+    "resolution":
+    {
+        "width": 640,
+        "height": 480
+    },
     "scenes": 
     [
         "House_Very_Far",

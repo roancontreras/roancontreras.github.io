@@ -10,9 +10,10 @@ var textTime = 0;
 var imagesMax = 0;
 var imagesLoaded = 0;
 var currentScene = "";
-// var sceneData = {};
 var scenes = [];
 var sceneIndex = 0;
+var gameWidth = 0;
+var gameHeight = 0;
 
 var lastUpdate = Date.now();
 var dt = 0;
@@ -48,13 +49,15 @@ function createScenes(_settings)
     currentScene = _settings["scenes"][0];
     imagesMax = _settings["scenes"].length;
 
-    //do recursive call
-    createSingleScene(_settings["scenes"][imagesLoaded], _settings);
-
     var _imgMap = document.createElement("map");
     _imgMap.name = "imgmap";
     _imgMap.id = "imgmap";
     _g.append(_imgMap);
+
+    // //do recursive call
+    // createSingleScene(_settings["scenes"][imagesLoaded], _settings);
+    for (var i = 0; i < imagesMax; i++)
+        createSingleScene(_settings["scenes"][i]);
 }
 
 function createSingleScene(_name, _scenesList)
@@ -81,15 +84,12 @@ function createSingleScene(_name, _scenesList)
 
                 if (imagesLoaded >= imagesMax)
                     scenesCompleted();
-                else
-                    createSingleScene(_scenesList["scenes"][imagesLoaded], _scenesList);
+                // else
+                //     createSingleScene(_scenesList["scenes"][imagesLoaded], _scenesList);
             }
 
             _img.src = json["image"];
             _g.append(_img);
-
-            // sceneData[_name] = {};
-            // sceneData[_name]["hotspots"] = json["hotspots"];
 
             scenes.push(new sceneStruct(_name, json["hotspots"]));
         });
@@ -97,9 +97,6 @@ function createSingleScene(_name, _scenesList)
 
 function scenesCompleted()
 {
-    // console.log(sceneData);
-    // console.log(scenes);
-
     document.getElementById("loading").style.display = "none";
     document.getElementById("loadingBar").style.display = "none";
     goToScene();
@@ -138,7 +135,12 @@ function setup()
 {
     fetch('settings.json', { method: 'GET'})
     .then(function(response)  { return response.json(); })
-    .then(function(json) { createScenes(json); });
+    .then(function(json) 
+    {
+        gameWidth = parseInt(json["resolution"]["width"]);
+        gameHeight = parseInt(json["resolution"]["height"]);
+        createScenes(json);
+    });
 }
 
 function setHotspot(_place, _action)
@@ -178,8 +180,6 @@ function setHotspot(_place, _action)
             _current.style.zIndex = 0;
             _next.style.zIndex = 1;
 
-            // console.log(scenes.findIndex((_s) => _s.name == _actionSplit[1]));
-
             //set transition
             var _moveSceneAction = function()
             {
@@ -203,13 +203,41 @@ function setHotspot(_place, _action)
                     break;
                 case "slide_left":
                 case "slide_right":
-                    var _nextXpos = 640 * (_actionSplit[2] == "slide_right" ? -1 : 1);
-                    var _currentXpos = -640 * (_actionSplit[2] == "slide_right" ? -1 : 1);
+                    var _nextXpos = gameWidth * (_actionSplit[2] == "slide_right" ? -1 : 1);
+                    var _currentXpos = -gameWidth * (_actionSplit[2] == "slide_right" ? -1 : 1);
 
                     new TimelineMax()
                     .addLabel("t")
-                    .to(_current, 0.75, { opacity: 1, x: _nextXpos, y: 0, ease: Power2.easeInOut}, "t+=0")
-                    .from(_next, 0.75, { opacity: 1,  x: _currentXpos, y: 0, ease: Power2.easeInOut}, "t+=0")
+                    .to(_current, 0.75, { opacity: 1, x: _nextXpos, y: 0, ease: Power1.easeInOut}, "t+=0")
+                    .from(_next, 0.75, { opacity: 1,  x: _currentXpos, y: 0, ease: Power1.easeInOut}, "t+=0")
+                    .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
+                case "slide_up":
+                case "slide_down":
+                    var _nextYpos = gameHeight * (_actionSplit[2] == "slide_up" ? -1 : 1);
+                    var _currentYpos = -gameHeight * (_actionSplit[2] == "slide_up" ? -1 : 1);
+
+                    new TimelineMax()
+                    .addLabel("t")
+                    .to(_current, 0.75, { opacity: 1, y: _nextYpos, x: 0, ease: Power1.easeInOut}, "t+=0")
+                    .from(_next, 0.75, { opacity: 1,  y: _currentYpos, x: 0, ease: Power1.easeInOut}, "t+=0")
+                    .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
+                case "slideover_left":
+                case "slideover_right":
+                    new TimelineMax()
+                    .addLabel("t")
+                    .from(_next, 0.75, { opacity: 1,  x: -gameWidth * (_actionSplit[2] == "slideover_right" ? -1 : 1), y: 0, ease: Power2.easeOut}, "t+=0")
+                    .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+                    .addCallback(_moveSceneAction, "+=0");
+                    break;
+                case "slideover_up":
+                case "slideover_down":
+                    new TimelineMax()
+                    .addLabel("t")
+                    .from(_next, 0.75, { opacity: 1,  y: -gameHeight * (_actionSplit[2] == "slideover_up" ? -1 : 1), x: 0, ease: Power2.easeOut}, "t+=0")
                     .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
                     .addCallback(_moveSceneAction, "+=0");
                     break;
@@ -217,27 +245,6 @@ function setHotspot(_place, _action)
                     _moveSceneAction();
                     break;
             }
-
-            // new TimelineMax()
-            // // .to(_current, 0.5, {opacity: 0, y: 0, x: 0}) //fade in out
-            // // .from(_next, 0.5, {opacity: 0, y: 0, x: 0})
-
-            // .from(_next, 0.5, {opacity: 0, y: 0, x: 0}) //fade in to slide
-
-            // // //Slide left/right
-            // // .addLabel("t")
-            // // .to(_current, 0.75, { opacity: 1, x: 640, y: 0, ease: Power2.easeInOut}, "t+=0")
-            // // .from(_next, 0.75, { opacity: 1,  x: -640, y: 0, ease: Power2.easeInOut}, "t+=0")
-            // // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
-
-            // // //Slide up/down
-            // // .addLabel("t")
-            // // .to(_current, 0.75, { opacity: 1, x: 0, y: 480, ease: Power2.easeInOut}, "t+=0")
-            // // .from(_next, 0.75, { opacity: 1,  x: 0, y: -480, ease: Power2.easeInOut}, "t+=0")
-            // // .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
-
-            // .addCallback(_moveSceneAction, "+=0");
-
             break;
             case "text":
             document.getElementById("textFrame").style.display = "block";
@@ -270,12 +277,9 @@ function update()
             hideText();
     }
 
-    // //Resize window
-    // if (document.getElementsByTagName("img").length < 1)
-    //     return;
-
-    var _wRef = 640;
-    var _hRef = 480;
+    //game scale
+    var _wRef = gameWidth;
+    var _hRef = gameHeight;
     var _aspectRef = _wRef / _hRef;
 
     var _w = window.innerWidth;
