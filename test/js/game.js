@@ -7,7 +7,7 @@
         this.idx = _idx;
         this.name = _name;
         this.hotspots = _hotspots;
-        this.extra = undefined;
+        this.timeout = undefined;
     };
 
     var isFullScreen = -1;
@@ -92,8 +92,8 @@ function createSingleScene(i, _name)
             _g.append(_img);
 
             var _newScene = new sceneStruct(i, _name, json["hotspots"]);
-            if (json["extra"] != undefined)
-                _newScene.extra = json["extra"];
+            if (json["timeout"] != undefined)
+                _newScene.timeout = json["timeout"];
 
             scenes.push(_newScene);
         });
@@ -138,19 +138,13 @@ function goToScene()
         _getImgMap.appendChild(_area);
     }
 
-    //if extra exists
-    if (_takeScene.extra != undefined)
-    if (_takeScene.extra.length > 0) //by mistake
+    //if timeout exists
+    if (_takeScene.timeout != undefined)
     {
-        //assuming that it's wait, for now
-        var _extraDataSplit = _takeScene.extra[0].split('|');
-        // console.log(_extraDataSplit);
-        waitTime = parseInt(_extraDataSplit[1]);
-        waitAction = function()
-        {
-            var _goSceneSplit = _extraDataSplit[2].split('=');
-            changeSceneAction(_goSceneSplit[1], _goSceneSplit[2]);
-        };
+        var _timeOutSplit = _takeScene.timeout.split('|');
+
+        waitTime = parseInt(_timeOutSplit[0]);
+        waitAction = function() { applyHotspot(_timeOutSplit[1].split('=')); };
     }
 }
 
@@ -264,38 +258,44 @@ function changeSceneAction(_scene, _transition)
 
 function setHotspot(_place, _action)
 {
-    var _actionSplit = _action.split('=');
+    _place.onmousedown = function() { applyHotspot(_action.split('=')) };
+}
 
-    _place.onmousedown = function() 
+function applyHotspot(_actionSplit)
+{
+    switch (_actionSplit[0])
     {
-        switch (_actionSplit[0])
+        case "go":
+        if (waitAction != null)
         {
-            case "go":
-            if (waitAction != null)
-            {
-                waitTime = 0;
-                waitAction = null;
-            }
-
-            changeSceneAction(_actionSplit[1], _actionSplit[2]);
-            break;
-            case "text":
-            var _showText = _actionSplit[1];
-
-            //if random
-            var _match = _actionSplit[1].match(/random{(.*[^])}/);
-            if (_match != null)
-            {
-                var _randomSplit = _match[1].split(';');
-                _showText = _randomSplit[Math.floor(Math.random() * _randomSplit.length)];
-            }
-
-            document.getElementById("textFrame").style.display = "block";
-            document.getElementById("text").innerText = _showText;
-            textTime = 3000;
-            break;
+            waitTime = 0;
+            waitAction = null;
         }
-    };
+
+        changeSceneAction(checkExpression(_actionSplit[1]), _actionSplit[2]);
+        break;
+        case "text":
+        document.getElementById("text").innerText = checkExpression(_actionSplit[1]);
+        document.getElementById("textFrame").style.display = "block";
+        textTime = 3000;
+        break;
+    }
+}
+
+function checkExpression(_string)
+{
+    var _match = "";
+
+    //Choose between values
+    _match = _string.match(/choose{(.*[^])}/);
+    if (_match != null)
+    {
+        var _chooseSplit = _match[1].split(';');
+        return _chooseSplit[Math.floor(Math.random() * _chooseSplit.length)].trim();
+    }
+
+    //no other
+    return _string.trim();
 }
 
 function hideText()
