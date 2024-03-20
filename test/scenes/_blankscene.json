@@ -1,7 +1,12 @@
 {
     "hotspots": 
     [
-        "rect|160, 118, 436, 308|go=next=none"
+        "rect|160, 118, 436, 308|go=next=none",
+        "rect|219, 147, 448, 237|go=next=none"
+    ],
+    "extra":
+    [
+
     ],
     "image": ""
 }
