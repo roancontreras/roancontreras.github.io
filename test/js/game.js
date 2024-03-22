@@ -8,9 +8,11 @@
         this.name = _name;
         this.hotspots = _hotspots;
         this.timeout = undefined;
+        this.functions = {};
     };
 
     var isFullScreen = -1;
+    var data = {};
 
     var textTime = 0;
     var waitTime = 0;
@@ -95,6 +97,9 @@ function createSingleScene(i, _name)
             if (json["timeout"] != undefined)
                 _newScene.timeout = json["timeout"];
 
+            if (json["functions"] != undefined)
+                _newScene.functions = json["functions"];
+
             scenes.push(_newScene);
         });
 }
@@ -119,14 +124,29 @@ function goToScene()
     {
         for (var i = 0; i < _hotspots.length; i++)
         {
-            var _dataSplit = _hotspots[i].split('|');
-    
-            var _area = document.createElement("area");
-            _area.shape = _dataSplit[0];
-            _area.coords = _dataSplit[1];
-            setHotspot(_area, _dataSplit[2]);
-    
-            _getImgMap.appendChild(_area);
+            var _apply = function(_split)
+            {    
+                var _area = document.createElement("area");
+                _area.shape = _split[0];
+                _area.coords = _split[1];
+                setHotspot(_area, _split[2]);
+        
+                _getImgMap.appendChild(_area);
+            };
+
+            //if (unlockable)
+            var _match = _hotspots[i].trim().match(/if (.*) {(.*)}/);
+            if (_match != null)
+            {
+                var _key = _match[1].trim();
+                var _hotspot = _match[2].trim();
+                // console.warn(_key);
+
+                if ((_key[0] == '!' && (data[_key] == null || data[_key] == false)) || data[_key] == true)
+                    _apply(_hotspot.trim().split('|'));
+            }
+            else
+                _apply(_hotspots[i].trim().split('|'));
         }
     }
     else
@@ -146,6 +166,8 @@ function goToScene()
         waitTime = parseInt(_timeOutSplit[0]);
         waitAction = function() { applyHotspot(_timeOutSplit[1].split('=')); };
     }
+
+    // console.warn(data);
 }
 
 function setup()
@@ -258,7 +280,7 @@ function changeSceneAction(_scene, _transition)
 
 function setHotspot(_place, _action)
 {
-    _place.onmousedown = function() { applyHotspot(_action.split('=')) };
+    _place.onmousedown = function() { applyHotspot(_action.trim().split('=')) };
 }
 
 function applyHotspot(_actionSplit)
@@ -279,6 +301,57 @@ function applyHotspot(_actionSplit)
         document.getElementById("textFrame").style.display = "block";
         textTime = 3000;
         break;
+        default: //if none of the above
+        scenes[sceneIndex].functions[_actionSplit[0]].split(';').forEach(_f => 
+        {
+            checkFunction(_f);
+        });
+        break;
+    }
+}
+
+function checkFunction(_string)
+{
+    // console.log(_string);
+    var _match =  "";
+
+    //set variable
+    _match = _string.match(/set (.*) = (.*)/);
+    if (_match != null)
+    {
+        var _key = _match[1].trim();
+        var _value = _match[2].trim();
+
+        if (_value.toLowerCase() == "true" || _value.toLowerCase() == "false")
+            data[_key] = _value == "true" ? true : false;
+        else
+            data[_key] = _value;
+
+        return;
+    }
+
+    //if-else
+    _match = _string.match(/if (.*) {(.*)} else {(.*)}/);
+    if (_match != null)
+    {
+        var _key = _match[1].trim();
+        var _true = _match[2].trim();
+        var _false = _match[3].trim();
+
+        if (data[_key] == null || data[_key] == false) //auto false
+            applyHotspot(_false.split('='));
+        else if (data[_key] == true)
+            applyHotspot(_true.split('='));
+
+        return;
+    }
+
+    //apply hotspot
+    var _isHotspot = _string.trim().split('=');
+    if (_isHotspot.length > 0)
+    {
+        applyHotspot(_isHotspot);
+        return;
     }
 }
 
@@ -287,11 +360,25 @@ function checkExpression(_string)
     var _match = "";
 
     //Choose between values
-    _match = _string.match(/choose{(.*[^])}/);
+    _match = _string.match(/choose{(.*)}/);
     if (_match != null)
     {
         var _chooseSplit = _match[1].split(';');
         return _chooseSplit[Math.floor(Math.random() * _chooseSplit.length)].trim();
+    }
+
+    _match = _string.match(/{(.+?)}/);
+    if (_match != null)
+    {
+        try
+        {
+            return data[_match[1].trim()];
+        }
+        catch (_e)
+        {
+            console.error("Variable " + _match[1] + " is null!");
+            console.error(_e);
+        }
     }
 
     //no other
