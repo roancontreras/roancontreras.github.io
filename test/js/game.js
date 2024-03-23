@@ -11,6 +11,7 @@
         this.functions = {};
     };
 
+    const dataPref = "SAVEDATA";
     var isFullScreen = -1;
     var data = {};
 
@@ -25,6 +26,7 @@
     
     var gameWidth = 0;
     var gameHeight = 0;
+    var isTransitioning = false;
 
     var lastUpdate = Date.now();
     var dt = 0;
@@ -106,9 +108,41 @@ function createSingleScene(i, _name)
 
 function scenesCompleted()
 {
+    if (localStorage.getItem(dataPref) != null)
+    {
+        var _dataSplit = localStorage.getItem(dataPref).split('\n');
+        sceneIndex = parseInt(_dataSplit[0]);
+        data = JSON.parse(_dataSplit[1]);
+        
+        // sceneIndex = parseInt(localStorage.getItem(dataPref));
+
+    }
+
     scenes.sort((_a, _b) => _a.idx - _b.idx);
     document.getElementById("loading").remove();
     goToScene();
+
+    //insert reset function
+    document.getElementById("reset").onclick = function()
+    {
+        if (isTransitioning)
+            return;
+
+        if (confirm("You're about to reset the game. Are you sure?") == true)
+        {
+            //clear data
+            waitAction = null;
+            waitTime = 0;
+            hideText();
+            data = {};
+            localStorage.clear();
+
+            //return from the beginning
+            document.getElementById(scenes[sceneIndex].name).style.display = "none";
+            sceneIndex = 0;
+            goToScene();
+        }
+    };
 }
 
 function goToScene()
@@ -148,6 +182,8 @@ function goToScene()
             else
                 _apply(_hotspots[i].trim().split('|'));
         }
+
+        setTransitioning(false);
     }
     else
     {
@@ -156,6 +192,8 @@ function goToScene()
         _area.coords = "0, 0, " + gameWidth + ", " + gameHeight;
         _area.style.cursor = "progress";
         _getImgMap.appendChild(_area);
+
+        setTransitioning(true);
     }
 
     //if timeout exists
@@ -182,9 +220,30 @@ function setup()
     });
 }
 
+function setTransitioning(_value)
+{
+    isTransitioning = _value;
+    document.getElementById("reset").style.opacity = _value ? 0.1 : 0.5;
+
+    if (!isTransitioning)
+        saveGame();
+}
+
+function saveGame()
+{
+    // console.log("save");
+    
+    var _data = sceneIndex.toString();
+    _data += "\n" + JSON.stringify(data);
+
+    localStorage.setItem(dataPref, _data);
+}
+
 function changeSceneAction(_scene, _transition)
 {
     hideText();
+    setTransitioning(true);
+
     var _current = document.getElementById(scenes[sceneIndex].name);
 
     //determine next scene
@@ -272,6 +331,24 @@ function changeSceneAction(_scene, _transition)
             .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
             .addCallback(_moveSceneAction, "+=0");
             break;
+        case "slidereveal_left":
+        case "slidereveal_right":
+            _current.style.zIndex = 1;
+            _next.style.zIndex = 0;
+            new TimelineMax()
+            .to(_current, 0.75, {opacity: 1, y: 0, x: gameWidth * (_transition == "slidereveal_left" ? -1 : 1), ease: Power2.easeIn})
+            .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+            .addCallback(_moveSceneAction, "+=0");
+            break;
+        case "slidereveal_up":
+        case "slidereveal_down":
+                _current.style.zIndex = 1;
+                _next.style.zIndex = 0;
+                new TimelineMax()
+                .to(_current, 0.75, {opacity: 1, x: 0, y: gameHeight * (_transition == "slidereveal_up" ? -1 : 1), ease: Power2.easeIn})
+                .to(_current, 0, { opacity: 1, x: 0, y: 0 }) //quick fix
+                .addCallback(_moveSceneAction, "+=0");
+                break;
         default: //none or otherwise
             _moveSceneAction();
             break;
@@ -327,6 +404,7 @@ function checkFunction(_string)
         else
             data[_key] = _value;
 
+        saveGame();
         return;
     }
 
