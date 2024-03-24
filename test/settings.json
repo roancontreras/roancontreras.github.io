@@ -4,6 +4,15 @@
         "width": 640,
         "height": 480
     },
+    "transitionTime":
+    {
+        "fade": 0.5,
+        "move": 0.75
+    },
+    "others":
+    {
+        "enableSave" : false
+    },
     "scenes": 
     [
         "House_Very_Far",
@@ -14,6 +23,7 @@
         "inlamp_scene_mid",
         "inlamp_scene_right",
         "inlamp_scene_left",
-        "inlamp_scene_down"
+        "inlamp_scene_down",
+        "LucidDream"
     ]
 }
