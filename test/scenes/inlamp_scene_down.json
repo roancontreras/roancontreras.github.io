@@ -4,6 +4,7 @@
         "rect|210, 271, 429, 434|go=inlamp_scene_mid=none",
         "rect|107, 0, 185, 120|checkWater"
     ],
+    "bypassSave": false,
     "functions":
     {
         "checkWater" : "if waterTouched {touchedWater} else {text=Touch the water...}",

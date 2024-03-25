@@ -4,6 +4,7 @@
         "rect|549, 0, 640, 473|go=inlamp_scene_mid=slide_right",
         "if waterTouched {rect|205, 13, 314, 172|rockTouched}"
     ],
+    "bypassSave": false,
     "functions": 
     {
         "rockTouched" : "set balloonScene = LucidDream; text=Puts water on that rock..."

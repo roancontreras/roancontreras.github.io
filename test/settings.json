@@ -11,9 +11,12 @@
     },
     "others":
     {
-        "enableSave" : false
+        "enableSave" : false,
+        "allowFullScreen" : false,
+        "gameResetText" : "You're about to reset the game. Are you sure?",
+        "resetSceneTo" : "0"
     },
-    "scenes": 
+    "scenes":
     [
         "House_Very_Far",
         "House_Far",
