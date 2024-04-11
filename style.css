@@ -5,12 +5,11 @@
 *
 {
     box-sizing: border-box;
+    font-family: "Roboto Mono", monospace;
 }
 
 body
 {
-    /* letter-spacing: -0.5px; */
-    font-family: "Roboto Mono", monospace;
     background-color: #0000aa;
     color: white;
     margin: 0;
