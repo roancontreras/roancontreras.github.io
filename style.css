@@ -115,17 +115,17 @@ hr
     width: 100%;
     height: 8px;
     background: linear-gradient(to right, 
-        #c21750   16%,
-        #d5546a  16%, 
-        #d5546a  33%, 
-        #4477fa   33%, 
-        #4477fa   50%, 
-        #2f5cb3 50%, 
-        #2f5cb3 66%, 
-        #f932c9 66%,
-        #f932c9 83%,
-        #b628e3 83%,
-        #b628e3 100%
+        #ffffff 16%,
+        #cacaca 16%, 
+        #cacaca 33%, 
+        #8d8d8d 33%, 
+        #8d8d8d 50%, 
+        #686868 50%, 
+        #686868 66%, 
+        #4e4e4e 66%,
+        #4e4e4e 83%,
+        #3f3f3f 83%,
+        #3f3f3f 100%
     );
 }
 
